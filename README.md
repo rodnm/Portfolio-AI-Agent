@@ -1,7 +1,5 @@
 # Portfolio AI Agent
 
-![Streamlit App Screenshot](images/screenshot.png)
-
 > Bilingual AI assistant that answers questions about [Rodrigo Norabuena's portfolio site](https://github.com/rodnm/rodnm.github.io) — in **Spanish or English**, automatically.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://portfolio-agent.streamlit.app)
@@ -83,6 +81,12 @@ uv sync
 echo GEMINI_API_KEY=your_key_here > .env
 # Get your free key at: https://aistudio.google.com/apikey
 ```
+
+---
+
+## Screenshot
+
+![Streamlit App Screenshot](images/screenshot.png)
 
 ---
 
