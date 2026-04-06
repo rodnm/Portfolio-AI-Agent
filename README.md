@@ -1,5 +1,7 @@
 # Portfolio AI Agent
 
+![Streamlit App Screenshot](images/screenshot.png)
+
 > Bilingual AI assistant that answers questions about [Rodrigo Norabuena's portfolio site](https://github.com/rodnm/rodnm.github.io) — in **Spanish or English**, automatically.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://portfolio-agent.streamlit.app)
@@ -34,6 +36,12 @@ This agent makes that documentation **conversational**: ask any question about t
 | Data Source      | rodnm/rodnm.github.io `docs/`               |
 | Package Manager  | uv                                          |
 | Deployment       | Streamlit Cloud                             |
+
+---
+
+## Dataset
+
+This project uses an **original dataset** rather than the default DataTalksClub FAQ dataset. It dynamically ingests Markdown technical documentation directly from the `docs/` and `src/content/blog/` folders of the [rodnm.github.io](https://github.com/rodnm/rodnm.github.io) repository, ensuring the AI agent answers questions based on real, live personal project data.
 
 ---
 
