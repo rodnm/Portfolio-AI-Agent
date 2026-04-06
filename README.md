@@ -192,9 +192,9 @@ Gemini composes bilingual answer + Sources section
 
 ---
 
-## Course
+## Acknowledgments
 
-Built as the final project for the **[7-Day AI Agents Crash Course](https://alexeygrigorev.com/aihero/)** by Alexey Grigorev.
+Built as part of the **[AI Agents Crash Course](https://alexeygrigorev.com/aihero/)** by Alexey Grigorev at DataTalksClub.
 
 The project implements all 7 days of the curriculum:
 - Day 1–2: Data ingestion pipeline with chunking
@@ -203,6 +203,14 @@ The project implements all 7 days of the curriculum:
 - Day 5: Logging + LLM-as-judge evaluation
 - Day 6: Streamlit UI + CLI interface
 - Day 7: README, evaluations, deployment, sharing
+
+This project was made possible thanks to the following technologies and educational resources:
+
+- **DataTalksClub** – For providing the open-source course materials and community support.
+- **Alexey Grigorev** – For creating and teaching the *AI Agents Crash Course*.
+- **SentenceTransformers** – For the underlying embedding models and architecture.
+- **Streamlit** – For powering the interactive web user interface.
+- **Pydantic AI** – For serving as the robust, validation-driven core agent framework.
 
 ---
 
