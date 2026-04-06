@@ -1,0 +1,11 @@
+# requirements.txt - for Streamlit Cloud deployment
+# Streamlit Cloud reads this file (not pyproject.toml)
+
+minsearch
+pydantic-ai
+python-dotenv
+python-frontmatter
+requests
+streamlit
+tqdm
+pydantic

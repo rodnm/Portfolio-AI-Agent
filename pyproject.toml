@@ -1,0 +1,28 @@
+[project]
+name = "portfolio-agent"
+version = "0.1.0"
+description = "Bilingual AI Agent for rodnm.github.io portfolio documentation"
+requires-python = ">=3.12"
+dependencies = [
+    "minsearch>=0.0.10",
+    "pydantic>=2.12.5",
+    "pydantic-ai>=1.73.0",
+    "python-dotenv>=1.2.2",
+    "python-frontmatter>=1.1.0",
+    "requests>=2.33.0",
+    "streamlit>=1.55.0",
+    "tqdm>=4.67.3",
+]
+
+[project.scripts]
+portfolio-agent = "main:main"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.8",
+    "nest-asyncio>=1.6.0",
+    "pandas>=2.3.3",
+    "ruff>=0.15.8",
+]
