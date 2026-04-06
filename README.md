@@ -4,7 +4,7 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://portfolio-agent.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.12-blue)](https://www.python.org/)
-[![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash%20Lite-4285F4)](https://aistudio.google.com)
+[![OpenAI](https://img.shields.io/badge/LLM-gpt--4o--mini-412991)](https://platform.openai.com)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ---
@@ -27,7 +27,7 @@ This agent makes that documentation **conversational**: ask any question about t
 
 | Component        | Technology                                  |
 |------------------|---------------------------------------------|
-| LLM              | Google Gemini `gemini-2.5-flash-lite` (free) |
+| LLM              | OpenAI `gpt-4o-mini`                        |
 | Agent Framework  | Pydantic AI                                 |
 | Search Engine    | minsearch (BM25-style text + sliding window chunking) |
 | UI               | Streamlit                                   |
@@ -49,7 +49,7 @@ This project uses an **original dataset** rather than the default DataTalksClub 
 portfolio-agent/
 ├── ingest.py            # Data pipeline: download → parse → chunk → index
 ├── search_tools.py      # SearchTool class wrapping minsearch
-├── search_agent.py      # Pydantic AI agent with Gemini + bilingual system prompt
+├── search_agent.py      # Pydantic AI agent with OpenAI + bilingual system prompt
 ├── logs.py              # JSON interaction logging
 ├── main.py              # CLI interface
 ├── app.py               # Streamlit chat UI
@@ -66,7 +66,7 @@ portfolio-agent/
 
 ## Installation
 
-**Requirements:** Python 3.12+, [uv](https://docs.astral.sh/uv/), a free [Gemini API key](https://aistudio.google.com/apikey)
+**Requirements:** Python 3.12+, [uv](https://docs.astral.sh/uv/), an [OpenAI API key](https://platform.openai.com)
 
 ```bash
 # 1. Clone the repo
@@ -77,9 +77,9 @@ cd portfolio-agent
 uv sync
 
 # 3. Set up environment variables
-# Create a .env file with your GEMINI_API_KEY:
-echo GEMINI_API_KEY=your_key_here > .env
-# Get your free key at: https://aistudio.google.com/apikey
+# Create a .env file with your OPENAI_API_KEY:
+echo OPENAI_API_KEY=your_key_here > .env
+# Get your key at: https://platform.openai.com
 ```
 
 ---
@@ -141,27 +141,25 @@ Result: **11 markdown files → 25 indexed chunks**
 
 ## Evaluations
 
-Evaluated on **66 bilingual Q&A pairs** (33 ES / 33 EN) generated from the documentation using `eval/data-gen.ipynb`.
+Evaluated on **60 bilingual Q&A pairs** (30 ES / 30 EN) generated from the documentation using `eval/data-gen.ipynb`.
 
 ### Retrieval (minsearch)
 
 | Metric      | Score |
 |-------------|-------|
-| Hit Rate @5 | **0.818** (81.8%) |
-| MRR         | **0.541** |
+| Hit Rate @5 | **0.783** (78.3%) |
+| MRR         | **0.576** |
 
-### Answer Quality (LLM-as-judge with Gemini · 13 valid samples)
+### Answer Quality (LLM-as-judge with OpenAI · 60 valid samples)
 
 | Metric               | Score  |
 |----------------------|--------|
-| Avg Relevance (1–5)  | **3.62** |
-| Avg Accuracy (1–5)   | **3.23** |
-| Language Match Rate  | **84.6%** |
-| Source Citation Rate | **61.5%** |
+| Avg Relevance (1–5)  | **4.95** |
+| Avg Accuracy (1–5)   | **4.75** |
+| Language Match Rate  | **93.3%** |
+| Source Citation Rate | **100%** |
 
-> The full 66-question LLM-as-judge run was partially affected by API rate limits (429).
-> Retrieval metrics cover all 66 questions. Quality metrics reflect 13 successfully evaluated responses.
-> Re-run `eval/evaluations.ipynb` with increased delays for full coverage.
+> Retrieval metrics cover all 60 questions. Quality metrics reflect all 60 successfully evaluated responses! Open AI `gpt-4o-mini` executed smoothly without the aggressive rate limiting seen on initial tests.
 
 ---
 
@@ -180,12 +178,12 @@ minsearch (BM25 over 25 chunks)
 Top-5 relevant chunks returned to agent
      │
      ▼
-Gemini composes bilingual answer + Sources section
+OpenAI composes bilingual answer + Sources section
 ```
 
 1. **`ingest.py`** — Downloads the portfolio repo on startup, chunks the docs, builds an in-memory minsearch index.
 2. **`search_tools.py`** — Wraps the index in a `SearchTool` dataclass. The `.search()` method is registered as a Pydantic AI tool so the agent can call it autonomously.
-3. **`search_agent.py`** — Defines the system prompt (language detection rule, search-first rule, answer format) and initializes the Gemini agent via Pydantic AI.
+3. **`search_agent.py`** — Defines the system prompt (language detection rule, search-first rule, answer format) and initializes the OpenAI agent via Pydantic AI.
 4. **`logs.py`** — Writes each interaction to a JSON file in `logs/` for later analysis.
 5. **`main.py`** — CLI REPL loop. Accepts `--no-chunk` and `--top-k` flags.
 6. **`app.py`** — Streamlit chat UI. Uses `@st.cache_resource` so the index and agent are built once per session, not on every rerun.
@@ -199,7 +197,7 @@ Built as part of the **[AI Agents Crash Course](https://alexeygrigorev.com/aiher
 The project implements all 7 days of the curriculum:
 - Day 1–2: Data ingestion pipeline with chunking
 - Day 3: Text search engine with minsearch
-- Day 4: AI agent with function calling (Pydantic AI + Gemini)
+- Day 4: AI agent with function calling (Pydantic AI + OpenAI)
 - Day 5: Logging + LLM-as-judge evaluation
 - Day 6: Streamlit UI + CLI interface
 - Day 7: README, evaluations, deployment, sharing
