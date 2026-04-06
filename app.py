@@ -2,14 +2,14 @@
 app.py — Streamlit UI for Portfolio AI Agent
 
 Bilingual chat interface for querying the rodnm.github.io documentation.
-Powered by Google Gemini 2.5 Flash Lite via Pydantic AI.
+Powered by OpenAI GPT-4o-mini via Pydantic AI.
 
 Run locally:
     uv run streamlit run app.py
 
 Deploy:
     Push to GitHub, connect on share.streamlit.io,
-    add GEMINI_API_KEY to app Secrets.
+    add OPENAI_API_KEY to app Secrets.
 """
 
 from __future__ import annotations
@@ -65,7 +65,7 @@ with st.sidebar:
     st.divider()
 
     st.markdown("**Model**")
-    st.code("google-gla:gemini-2.5-flash-lite", language=None)
+    st.code("openai:gpt-4o-mini", language=None)
 
     st.markdown("**Knowledge base**")
     st.markdown(
@@ -131,7 +131,7 @@ if prompt := st.chat_input(placeholder):
                 response_text = str(result.output)
 
                 st.markdown(response_text)
-                st.caption(f"⏱️ {elapsed:.1f}s  •  gemini-2.5-flash-lite")
+                st.caption(f"⏱️ {elapsed:.1f}s  •  gpt-4o-mini")
 
                 # Log the interaction
                 try:

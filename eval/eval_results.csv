@@ -1,206 +1,1300 @@
 question_id,question,language,doc_id,agent_response,relevance,accuracy,language_match,source_cited,hit,rank,reciprocal_rank
-q0000,¿Cuál es el framework de CSS utilizado en el portafolio?,es,README,"## Resumen del Framework de CSS Utilizado
-El framework de CSS utilizado en el portafolio es **Tailwind CSS v4**. Este framework se eligió por su enfoque de utilidades (Utility-First CSS) y su compilador Just-In-Time (JIT), que permite generar un archivo CSS final optimizado según las clases utilizadas en el proyecto.
+q0000,¿Qué tecnologías se utilizan para construir el portafolio personal V1?,es,README,"El portafolio personal V1 utiliza las siguientes tecnologías:
 
-## Características Clave de Tailwind CSS
-- **Utility-First:** En lugar de crear hojas de estilo enormes, la UI se construye declarativamente inyectando clases atómicas directamente sobre el marcado.
-- **JIT Compiler (Just-in-Time):** Durante el desarrollo o el empaquetado, el compilador escanea todo el código fuente, identifica qué clases de Tailwind se están utilizando y genera un único archivo `.css` final que contiene exclusivamente las reglas utilizadas.
-- **Modo Oscuro Inteligente:** A través de la clase `dark:` y un pequeño script, el sitio evalúa la preferencia del sistema operativo antes de pintar el primer frame de la página.
+## Tecnologías Utilizadas
+- **Core**: [Astro](https://astro.build/) v5
+- **Estilos**: [Tailwind CSS](https://tailwindcss.com/) v4
+- **UI**: [React](https://reactjs.org/) v19
+- **Iconos**: [Lucide React](https://lucide.dev/)
+- **Calidad**: ESLint 9, Prettier, Husky, lint-staged
+- **Testing**: Vitest (Unit), Playwright (E2E)
+- **PWA**: Vite PWA Plugin
 
-## Ventajas del Enfoque de Tailwind CSS
-- Evita el problema teórico de la ""Cascada Invasiva"" del CSS.
-- Las utilidades encapsulan explícitamente el borde de un único componente, haciéndolo 100% predecible y aislando posibles ""efectos laterales"" visuales.
-- Permite una teoría de diseño reactivo (Responsive) que sigue el estándar de la industria Mobile-First.
+## Características del Portafolio
+- Rendimiento optimizado mediante la arquitectura de islas de Astro.
+- Estética moderna y minimalista gracias a Tailwind CSS.
+- Soporte para modo oscuro y diseño responsivo.
+- Integración con Google Analytics y optimización SEO.
+- Soporte para múltiples idiomas (Español e Inglés).
+- Funciona como una aplicación web progresiva (PWA), permitiendo instalación como aplicación nativa y funcionamiento offline.
 
-**Sources:**
-- [04-Estilos-Tailwind.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)
-- [Resumen-Arquitectura.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,False,0,0.0
-q0001,¿Qué tecnología se utiliza para la arquitectura de islas?,es,README,"## Arquitectura de Islas
-
-La arquitectura de islas se utiliza para lograr un equilibrio entre la generación de sitios estáticos y la interactividad del lado del cliente. En este enfoque, el sitio web se divide en dos partes: el ""océano estático"" y las ""islas de interactividad"".
-
-*   El **océano estático** se refiere a los componentes que no requieren interactividad del lado del cliente, como el layout, los textos de experiencia y los encabezados. Estos componentes se renderizan como HTML estático y no envían JavaScript al cliente.
-*   Las **islas de interactividad** son componentes que requieren interactividad del lado del cliente, como el botón de ""Modo Oscuro"". Estos componentes se inyectan como ""islas"" separadas y solo se descargan e hidratan cuando se necesitan.
-
-## Ventajas de la Arquitectura de Islas
-
-La arquitectura de islas ofrece varias ventajas, incluyendo:
-
-*   **Mejora del rendimiento**: Al reducir la cantidad de JavaScript que se envía al cliente, la arquitectura de islas puede mejorar el rendimiento del sitio web.
-*   **SEO excelente**: Los motores de búsqueda pueden indexar el contenido sin tener que renderizar JavaScript.
-*   **Flexibilidad**: La arquitectura de islas permite una gran flexibilidad en la creación de componentes interactivos y no interactivos.
-
-## Conclusión
-
-En resumen, la arquitectura de islas es un enfoque que combina la generación de sitios estáticos con la interactividad del lado del cliente. Al dividir el sitio web en componentes estáticos y dinámicos, se puede lograr un equilibrio entre el rendimiento y la interactividad.
+Para más detalles sobre la arquitectura y el funcionamiento, puedes consultar la documentación técnica del portafolio.
 
 **Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,4,True,True,True,1,1.0
+q0001,¿Cómo se gestiona el contenido y la configuración del portafolio?,es,README,"La gestión de contenido y configuración del portafolio se realiza de la siguiente manera:
 
-*   [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
-*   [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",4,2,True,True,False,0,0.0
-q0002,¿Dónde se gestionan los datos del portafolio?,es,README,"## Gestión de Datos del Portafolio
-La gestión de datos del portafolio se lleva a cabo en el archivo `src/config.ts`. Este archivo es el corazón de la gestión de datos y se utiliza para almacenar y validar los datos del portafolio.
+## 1. Centralización de Datos
+- **Patrón Vista-Modelo Centralizado**: Todo el contenido está estructurado en el archivo `src/config.ts`, donde se define un sistema que imita una base de datos NoSQL, exportando los datos en objetos `spanishData` y `englishData`. Este archivo actúa como la **Fuente de la Verdad**.
 
-### Patrón Vista-Modelo Centralizado
-El portafolio utiliza un patrón de diseño llamado Vista-Modelo Centralizado, donde todos los datos se almacenan en un solo archivo (`src/config.ts`) y se exportan como estructuras semánticas e idiomáticas (`spanishData`, `englishData`).
+## 2. Validación de Datos
+- **Zod**: Se utiliza para validar datos en tiempo de construcción, asegurando que los objetos cumplirán con un esquema predefinido. Por ejemplo:
+  ```typescript
+  const ProjectSchema = z.object({
+      title: z.string(),
+      description: z.string(),
+      link: z.string().url(),
+      image: ImageMetadataSchema,
+  });
+  ```
+  Si se introducen datos incorrectos, el proceso de construcción se abortará.
 
-### Validación de Contratos Base con Zod
-El portafolio utiliza la biblioteca Zod para validar los datos y asegurarse de que cumplan con los esquemas definidos. Esto se hace para prevenir regresiones y fallos en el código.
+## 3. Internacionalización
+- Se implementa un sistema de internacionalización que permite sustituir datos en función del `Locale` recibido, garantizando que tanto `spanishData` como `englishData` se ajusten a la misma estructura de interfaz (`PortfolioDataSchema`).
 
-### Resolución Simétrica por i18n
-El portafolio utiliza un mecanismo de sustitución simétrica para manejar los idiomas. Los componentes de Astro reciben una propiedad `currentLocale` que se utiliza para determinar qué idioma se debe utilizar.
+## 4. Estructura del Proyecto
+- La estructura de archivos se organiza de manera que todos los componentes y datos se mantengan separados, lo que facilita una administración clara y controlada del contenido.
 
-## Conclusión
-En resumen, la gestión de datos del portafolio se lleva a cabo en el archivo `src/config.ts`, que utiliza un patrón de diseño centralizado y la biblioteca Zod para validar los datos. El portafolio también utiliza un mecanismo de sustitución simétrica para manejar los idiomas.
+## 5. Flujo de datos
+- Los componentes de Astro reciben propiedades como `currentLocale`, que determinan qué conjunto de datos cargar para el renderizado, lo que optimiza tanto el rendimiento como la escalabilidad del sitio.
 
-**Sources:**
-- [03-Gestion-de-Datos.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
-- [Resumen-Arquitectura.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,3,0.3333333333333333
-q0003,What is the version of React used in the project?,en,README,"## Version of React Used
-The version of React used in the project is React v19.
-
-## Sources:
-- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,False,0,0.0
-q0004,How do you configure the contact form to send emails?,en,README,"<function=search_portfolio_docs {""query"": ""contact form email configuration""}</function>",2,1,True,False,True,1,1.0
-q0005,What is the purpose of the config.ts file?,en,README,"<function=search_portfolio_docs {""query"": ""config.ts purpose""}></function>",1,1,True,False,True,4,0.25
-q0006,¿Qué tipo de guías se encuentran en la sección de Guías Prácticas?,es,docs_00-Indice,"<function=search_portfolio_docs{""query"": ""Gu\u00edas Pr\u00e1cticas""}</function>",1,1,False,False,True,3,0.3333333333333333
-q0007,What is the purpose of the Resumen Arquitectónico document?,en,docs_00-Indice,"<function=search_portfolio_docs{""query"": ""Resumen Arquitectónico purpose""}</function>",1,1,True,False,False,0,0.0
-q0008,¿Qué patrón de diseño se emplea para la gestión de datos?,es,docs_00-Indice,"<function=search_portfolio_docs {""query"": ""patrón de diseño para la gestión de datos""} </function>",2,1,False,False,False,0,0.0
-q0009,What is the role of React in the application architecture?,en,docs_00-Indice,"## Role of React in the Application Architecture
-The role of React in the application architecture is to provide interactivity to specific components, known as ""Islands of Interactivity"". These components are integrated into the static HTML generated by Astro, allowing for a hybrid approach that combines the benefits of static site generation (SSG) with the dynamic capabilities of React.
-
-*   React is used exclusively for components that require complex state management or interactivity, such as alerts, modals, or icons that respond to events.
-*   Astro mounts React internally through the `@astrojs/react` integration, enabling the use of React components within Astro templates.
-*   The `client:load` directive is used to specify when a React component should be loaded, allowing for granular control over which components are sent to the client.
-
-## Benefits of Using React with Astro
-The combination of Astro and React provides several benefits, including:
-
-*   **Improved Performance**: By only sending the necessary JavaScript code for interactive components, the overall payload size is reduced, resulting in faster page loads.
-*   **Enhanced SEO**: The static HTML generated by Astro can be crawled and indexed by search engines, improving the site's visibility and ranking.
-
-## Example Use Case
-The ToggleTheme component is an example of a React component used in the portfolio to provide interactivity. It is integrated into the Astro template using the `client:load` directive, ensuring that only the necessary JavaScript code is sent to the client.
-
-**Sources:**
-- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
-- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,3,0.3333333333333333
-q0010,¿Qué tecnología se utiliza para la compilación predictiva de estilos visuales?,es,docs_00-Indice,"<function=search_portfolio_docs {""query"": ""tecnología compilación predictiva estilos visuales""}""</function>",2,1,False,False,True,5,0.2
-q0011,What is the purpose of the Service Worker in the Despliegue y Teoría PWA document?,en,docs_00-Indice,"## Purpose of the Service Worker
-The Service Worker is a JavaScript thread executed in the background by the browser, even when the tab has been closed and destroyed in memory. Its purpose is to act as a cache and proxy, allowing the application to work offline. When the application is first opened, the Service Worker intercepts all HTTPS traffic, downloading the page to the browser's application memory. If the network connection is lost (offline), the Service Worker recognizes the drop in the socket interface and acts as a mock server, responding internally to the browser with the previously indexed portfolio data.
-
-## Key Features of the Service Worker
-* **Stale-While-Revalidate Cache**: The Service Worker caches the page data, allowing it to be reused even when the network connection is lost.
-* **Mock Server**: The Service Worker acts as a mock server, responding to browser requests with cached data when the network connection is lost.
-
-## Sources:
-- [05-Despliegue-y-PWA.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)",5,5,True,True,True,5,0.2
-q0012,¿Cuál es el enfoque principal de Astro?,es,docs_01-Arquitectura-Astro,"## Enfoque Principal de Astro
-
-El enfoque principal de Astro es entregar la menor cantidad posible de JavaScript al cliente. Esto se logra a través de la generación de sitios web estáticos (SSG) y la arquitectura de islas, que permite hidratar componentes de React de manera granular.
-
-## Arquitectura de Islas
-
-La arquitectura de islas es un paradigma híbrido que combina la generación de sitios web estáticos con la interactividad de los componentes de React. Los componentes de React se pueden hidratar de manera granular, lo que significa que solo se envía el código JavaScript necesario para cada componente.
-
-## Ventajas de Astro
-
-Las ventajas de Astro incluyen:
-
-* Mejora del rendimiento: La generación de sitios web estáticos reduce el tiempo de carga de la página y mejora la experiencia del usuario.
-* Mejora del SEO: Los motores de búsqueda pueden indexar el contenido de la página sin tener que ejecutar JavaScript.
-* Reducción del tamaño del código: La arquitectura de islas reduce el tamaño del código JavaScript que se envía al cliente.
-
-## Conclusión
-
-En resumen, el enfoque principal de Astro es entregar la menor cantidad posible de JavaScript al cliente a través de la generación de sitios web estáticos y la arquitectura de islas. Esto ofrece ventajas en términos de rendimiento, SEO y reducción del tamaño del código.
+Para más información, puedes consultar los siguientes documentos:
 
 **Fuentes:**
-- [01-Arquitectura-Astro.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
-- [Resumen-Arquitectura.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
-q0013,What is the main advantage of using Static Site Generation (SSG) in this portfolio?,en,docs_01-Arquitectura-Astro,"## Main Advantage of Static Site Generation (SSG)
-The main advantage of using Static Site Generation (SSG) in this portfolio is the significant improvement in performance and SEO. By generating static HTML files at build time, the website can be served directly by a web server without the need for a database or complex server-side rendering. This approach reduces the First Contentful Paint (FCP) and Time to Interactive (TTI) drastically, as the browser only needs to download and render HTML and CSS, which are instantaneous.
-
-## Key Benefits
-* **Performance:** Faster page loads due to reduced JavaScript execution.
-* **SEO:** Excellent search engine optimization, as search engines can index the content without rendering JavaScript.
-
-## Sources:
+- [Gestión de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
 - [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
-- [07 Guia Despliegue GitHub Pages](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)
-- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,3,0.3333333333333333
-q0014,¿Qué es la Arquitectura de Islas en Astro?,es,docs_01-Arquitectura-Astro,"## Arquitectura de Islas en Astro
-La Arquitectura de Islas en Astro es un paradigma híbrido que combina la generación de sitios estáticos (SSG) con la hidratación parcial de componentes interactivos. En este enfoque, el sitio web se divide en dos partes:
-- **Océano estático**: El contenido estático, como texto y layouts, se genera en el servidor y se envía al cliente como HTML puro.
-- **Islas de interactividad**: Los componentes que requieren interactividad, como botones o formularios, se hidratan de manera parcial, lo que significa que solo se descarga y se ejecuta el código JavaScript necesario para esa específica parte del sitio.
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)",5,5,True,True,True,4,0.25
+q0002,¿Dónde se encuentran la documentación técnica y las guías de despliegue?,es,README,"La documentación técnica y las guías de despliegue de tu portafolio se encuentran en varios documentos relevantes en GitHub. Aquí tienes un resumen de estos documentos:
 
-Este enfoque ofrece varias ventajas, como:
-* **Mejora en el rendimiento**: Al reducir la cantidad de JavaScript que se envía al cliente, se mejora el tiempo de carga de la página.
-* **Excelente SEO**: Los motores de búsqueda pueden indexar el contenido estático sin necesidad de renderizar JavaScript.
-* **Flexibilidad**: La Arquitectura de Islas permite combinar diferentes frameworks y bibliotecas para crear componentes interactivos.
+## Documentación Técnica
 
-## Ejemplos de Islas de Interactividad
-En el portafolio de Rodrigo Norabuena, se pueden encontrar ejemplos de Islas de Interactividad, como:
-* El botón de ""Modo Oscuro"" (`ToggleTheme.tsx`), que se hidrata de manera parcial para ofrecer interactividad al usuario.
-* El componente de imagen (`ImageCarousel.tsx`), que se hidrata cuando el usuario hace scroll hacia él.
+1. **Gestión de Datos**
+   - Describe cómo se gestionan los datos utilizando el patrón Vista-Modelo y la validación con Zod.
+   - Detalles sobre la capa de persistencia en `src/config.ts` y el sistema de tipado.
+   - [Leer más aquí](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
 
-## Ventajas de la Arquitectura de Islas
-La Arquitectura de Islas ofrece varias ventajas, como:
-* **Reducir el tamaño del bundle de JavaScript**: Al dividir el sitio en componentes interactivos y estáticos, se reduce la cantidad de código que se envía al cliente.
-* **Mejorar el rendimiento**: Al reducir la cantidad de JavaScript que se ejecuta en el cliente, se mejora el rendimiento del sitio.
-* **Flexibilidad**: La Arquitectura de Islas permite combinar diferentes frameworks y bibliotecas para crear componentes interactivos.
+2. **Despliegue y PWA**
+   - Explica las estrategias de empaquetado, el uso de Vite como bundler, y la implementación de Service Workers para la funcionalidad offline de la PWA.
+   - [Leer más aquí](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)
+
+3. **Guía de Despliegue en GitHub Pages**
+   - Proporciona instrucciones detalladas para desplegar el proyecto en GitHub Pages, incluyendo configuraciones para User Site y Project Site.
+   - [Leer más aquí](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)
+
+## Cómo Desplegar
+- El proyecto está configurado para desplegarse automáticamente utilizando GitHub Actions. Debes realizar un `push` a la rama `main` para que se inicie el proceso de despliegue.
+
+**Nota:** Asegúrate de revisar las configuraciones en `astro.config.mjs` según el tipo de despliegue que elijas.
 
 **Sources:**
-- [01-Arquitectura-Astro.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
-- [Resumen-Arquitectura.md](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",1,1,False,False,True,1,1.0
-q0015,How does Astro's Islands Architecture reduce the final size of JavaScript files?,en,docs_01-Arquitectura-Astro,,1,1,False,False,True,1,1.0
-q0016,¿Cuál es el resultado final del proceso de compilación de Astro?,es,docs_01-Arquitectura-Astro,,1,1,False,False,True,3,0.3333333333333333
-q0017,What is the benefit of using Astro's Static Site Generation for search engine optimization (SEO)?,en,docs_01-Arquitectura-Astro,,1,1,False,False,True,1,1.0
-q0018,¿Cuál es la teoría de uso para los componentes de Astro (.astro)?,es,docs_02-Componentes,,1,1,False,False,True,5,0.2
-q0019,What is the main architectural data flow theory followed by the portfolio?,en,docs_02-Componentes,,1,1,False,False,True,3,0.3333333333333333
-q0020,¿Cómo funciona el ciclo de vida de los componentes de Astro?,es,docs_02-Componentes,,1,1,False,False,True,3,0.3333333333333333
-q0021,What is the purpose of using React components (.tsx) in the portfolio?,en,docs_02-Componentes,,1,1,False,False,False,0,0.0
-q0022,¿Qué ventaja ofrece el modelo de inyección de dependencias mediante Props?,es,docs_02-Componentes,,1,1,False,False,True,3,0.3333333333333333
-q0023,How does React manage the state of its components?,en,docs_02-Componentes,,1,1,False,False,False,0,0.0
-q0024,¿Dónde se encuentra el patrón Vista-Modelo Centralizado?,es,docs_03-Gestion-de-Datos,,1,1,False,False,True,1,1.0
-q0025,What is the purpose of using Zod in the project?,en,docs_03-Gestion-de-Datos,,1,1,False,False,True,2,0.5
-q0026,¿Cómo se implementa la validación de contratos base en el proyecto?,es,docs_03-Gestion-de-Datos,,1,1,False,False,True,1,1.0
-q0027,What is the role of the currentLocale prop in the Astro components?,en,docs_03-Gestion-de-Datos,,1,1,False,False,False,0,0.0
-q0028,¿Por qué se utiliza TypeScript en el proyecto?,es,docs_03-Gestion-de-Datos,,1,1,False,False,True,2,0.5
-q0029,How does the project ensure data integrity and prevent broken links?,en,docs_03-Gestion-de-Datos,,1,1,False,False,False,0,0.0
-q0030,¿Cuál es el problema que resuelve Tailwind CSS con su enfoque de utilidades?,es,docs_04-Estilos-Tailwind,,1,1,False,False,True,1,1.0
-q0031,What is the purpose of the JIT Compiler in Tailwind CSS?,en,docs_04-Estilos-Tailwind,,1,1,False,False,True,1,1.0
-q0032,¿Por qué se utiliza el criterio Mobile-First en el diseño reactivo?,es,docs_04-Estilos-Tailwind,,1,1,False,False,True,1,1.0
-q0033,How does Tailwind CSS handle the issue of having thousands of classes?,en,docs_04-Estilos-Tailwind,,1,1,False,False,True,1,1.0
-q0034,¿Qué tecnologías se utilizan en el portafolio para la ingeniería de estilos reactivos?,es,docs_04-Estilos-Tailwind,,1,1,False,False,True,1,1.0
-q0035,What is the benefit of using utility classes in Tailwind CSS?,en,docs_04-Estilos-Tailwind,,1,1,False,False,True,1,1.0
-q0036,¿Cuál es el motor de empaquetamiento utilizado en el portafolio?,es,docs_05-Despliegue-y-PWA,,1,1,False,False,True,3,0.3333333333333333
-q0037,What is the purpose of the Service Worker in the PWA implementation?,en,docs_05-Despliegue-y-PWA,,1,1,False,False,True,1,1.0
-q0038,¿Qué librería de PWA se utiliza para integrar la teoría abstracta de caché y proxy?,es,docs_05-Despliegue-y-PWA,,1,1,False,False,True,3,0.3333333333333333
-q0039,How does the Shift-Left Testing approach ensure the integrity of the deployed artifact?,en,docs_05-Despliegue-y-PWA,,1,1,False,False,True,1,1.0
-q0040,¿Qué herramientas se utilizan para aplicar detección temprana de deficiencias semánticas?,es,docs_05-Despliegue-y-PWA,,1,1,False,False,True,3,0.3333333333333333
-q0041,What is the role of Husky and lint-staged in the CI/CD pipeline?,en,docs_05-Despliegue-y-PWA,,1,1,False,False,True,3,0.3333333333333333
-q0042,¿Dónde debo crear el repositorio en GitHub?,es,docs_06-Primeros-Pasos-Git,,1,1,False,False,True,3,0.3333333333333333
-q0043,What is the purpose of the git add command in the given sequence?,en,docs_06-Primeros-Pasos-Git,,1,1,False,False,True,1,1.0
-q0044,¿Qué debo hacer después de conectar mi carpeta con GitHub?,es,docs_06-Primeros-Pasos-Git,,1,1,False,False,False,0,0.0
-q0045,How do I rename the main branch if it is not already named 'main'?,en,docs_06-Primeros-Pasos-Git,,1,1,False,False,True,1,1.0
-q0046,¿Qué mensaje de commit se sugiere para el primer commit?,es,docs_06-Primeros-Pasos-Git,,1,1,False,False,False,0,0.0
-q0047,What should I do after executing the git push command?,en,docs_06-Primeros-Pasos-Git,,1,1,False,False,True,1,1.0
-q0048,¿Cuál es el requisito para el nombre del repositorio en un sitio de usuario?,es,docs_07-Guia-Despliegue-GitHub-Pages,,1,1,False,False,True,3,0.3333333333333333
-q0049,What is the purpose of the 'base' configuration in astro.config.mjs?,en,docs_07-Guia-Despliegue-GitHub-Pages,,1,1,False,False,True,4,0.25
-q0050,¿Qué pasa si la configuración 'base' en astro.config.mjs no coincide con la URL de tu repositorio?,es,docs_07-Guia-Despliegue-GitHub-Pages,,1,1,False,False,True,5,0.2
-q0051,How can I verify the status of my deployment?,en,docs_07-Guia-Despliegue-GitHub-Pages,,1,1,False,False,False,0,0.0
-q0052,¿Qué archivo es necesario para evitar que GitHub Pages ignore archivos que comienzan con '_'?,es,docs_07-Guia-Despliegue-GitHub-Pages,,1,1,False,False,True,1,1.0
-q0053,What command should I use to push changes to the 'main' branch?,en,docs_07-Guia-Despliegue-GitHub-Pages,,1,1,False,False,True,1,1.0
-q0054,¿Cuál es el patrón arquitectónico utilizado en el portafolio?,es,docs_Resumen-Arquitectura,,1,1,False,False,True,2,0.5
-q0055,What is the role of Astro in the project?,en,docs_Resumen-Arquitectura,,1,1,False,False,True,4,0.25
-q0056,¿Cómo se maneja la internacionalización en el portafolio?,es,docs_Resumen-Arquitectura,,1,1,False,False,True,1,1.0
-q0057,What is the purpose of using Zod in the project?,en,docs_Resumen-Arquitectura,,1,1,False,False,True,3,0.3333333333333333
-q0058,¿Qué tecnología se utiliza para el motor de diseño y renderizado CSS?,es,docs_Resumen-Arquitectura,,1,1,False,False,True,3,0.3333333333333333
-q0059,How does the project achieve a Progressive Web App (PWA) functionality?,en,docs_Resumen-Arquitectura,,1,1,False,False,True,3,0.3333333333333333
-q0060,¿Cuál es el propósito del blog?,es,src_content_blog_first-post,,1,1,False,False,True,1,1.0
-q0061,What topics will the blog cover?,en,src_content_blog_first-post,,1,1,False,False,True,1,1.0
-q0062,¿Por qué el autor cree que escribir es importante?,es,src_content_blog_first-post,,1,1,False,False,True,1,1.0
-q0063,How will the blog help the author?,en,src_content_blog_first-post,,1,1,False,False,True,1,1.0
-q0064,¿Qué tipo de contenido se puede esperar del blog?,es,src_content_blog_first-post,,1,1,False,False,True,1,1.0
-q0065,What can readers expect from the blog in the future?,en,src_content_blog_first-post,,1,1,False,False,True,1,1.0
+- [03-Gestion-de-Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [05-Despliegue-y-PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)
+- [07-Guia-Despliegue-GitHub-Pages](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)",5,4,True,True,False,0,0.0
+q0003,What are the main features of the Portfolio Personal V1?,en,README,"## Main Features of Portfolio Personal V1
+
+Portfolio Personal V1 is a professional web portfolio designed for Developers, Data Scientists, and Technical Professionals. Below are the key features:
+
+- **Extreme Performance**: Instant load times due to Astro's island architecture.
+- **Premium Design**: Minimalistic and professional aesthetic utilizing Tailwind CSS v4.
+- **Intelligent Dark Mode**: Automatic system preference detection and persistent manual toggle.
+- **Responsive Design**: Seamless adaptation to mobile, tablet, and desktop devices.
+- **Multi-language Support**: Native support for both Spanish and English with automatic detection.
+- **Centralized Configuration**: Manage all content from `src/config.ts` with type validation using Zod.
+- **Media Rich**: Optimized support for project and profile images.
+- **Analytics & SEO**: Integration with Google Analytics 4 along with optimized meta tags.
+- **PWA**: Installable as a native app with offline support.
+- **Accessibility**: Compliance with WCAG 2.1 AA standards, keyboard navigation support, and compatibility with screen readers.
+
+These features combine to offer a robust solution for showcasing skills and projects effectively.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)",5,4,True,True,True,1,1.0
+q0004,How can a user customize the portfolio's content and images?,en,README,"To customize the content and images of Rodrigo Norabuena's portfolio, you can follow these steps:
+
+## 1. Edit Content
+All textual data for the portfolio is managed in the `src/config.ts` file. You can edit this file to update:
+
+- Personal information (Name, Title, Description)
+- Contact links (Email, GitHub, LinkedIn)
+- Work experience
+- Education
+- Projects
+- Skills
+
+**Note:** The `src/config.ts` file uses **Zod** for data validation. If there’s a type error, you will see an alert in the console.
+
+## 2. Images and Files
+To customize images and files, place your files in the `src/assets/images/` folder (recommended for optimization) or in the `public/` folder:
+
+- **Profile Photo:** Update the import in `src/config.ts`.
+- **CV:** Save your CV as `public/cv.pdf`.
+
+## 3. Contact Form
+The contact form uses **Formspree** to send emails. To configure it:
+
+1. Create a free account at [Formspree](https://formspree.io/).
+2. Create a new form.
+3. Copy the **Form ID** (the code at the end of the URL, e.g., `f/xpzq...`).
+4. Open `src/components/Portfolio.astro` and find the `<ContactForm />` component.
+5. Replace the `formId` with your own ID.
+
+Following these steps will help you customize the portfolio to better suit your needs.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)",5,5,True,True,True,1,1.0
+q0005,What commands are available for development and building the project?,en,README,"The commands available for development and building the project are primarily executed through npm. Here are the main commands you can use:
+
+## Development Commands
+- **`npm run dev`**: This command starts a local development server. It allows you to preview your site in real-time, with hot reloading for changes made to your files.
+
+## Build Commands
+- **`npm run build`**: This command compiles the project into static files that can be deployed. It processes all your TypeScript and JavaScript on the server at build time, outputting pure HTML and CSS.
+
+## Deployment Commands
+- **`npm run deploy`**: This command is typically designed to push your built files to GitHub Pages automatically. Make sure your GitHub Actions are configured correctly in your repository to handle this.
+
+### Additional Notes
+- Ensure that you have Node.js and npm installed on your machine before running these commands.
+- You can check the `package.json` file for any additional scripts or commands that may also be available for testing or linting.
+
+**Sources:**
+- [Guía Despliegue GitHub Pages](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)",5,4,True,True,False,0,0.0
+q0006,¿Qué tipo de información se puede encontrar en la sección de documentación técnica del Portafolio V1?,es,docs_00-Indice,"En la sección de documentación técnica del Portafolio V1, se puede encontrar una variedad de información relevante y útil, que abarca desde guías prácticas hasta exploraciones teóricas. Aquí te detallo los principales contenidos disponibles:
+
+## Guías Prácticas
+1. **Primeros Pasos con Git a GitHub**: Instrucciones paso a paso para subir tu portafolio al repositorio en la nube.
+2. **Guía de Despliegue (GitHub Pages)**: Configuraciones clave previas al despliegue en `astro.config.mjs` y auto-publicación utilizando GitHub Actions.
+
+## Teoría Web y Arquitectura
+- **Resumen Arquitectónico**: Una visión general del uso de Astro (v5) para la generación estática de sitios (SSG) y la arquitectura de islas.
+- **Arquitectura Base y Teoría de Islas**: Detalles sobre el patrón SSG, el almacenamiento en memoria de datos y la inyección de interactividad en el frontend.
+- **Modelado Domiciliario de Datos**: Explicación de cómo se implementa el patrón Vista-Modelo en el proyecto utilizando validaciones con Zod.
+- **Ingeniería de Estilos Visuales**: Información sobre el uso de Tailwind CSS y su enfoque utility-first.
+- **Despliegue y Teoría PWA**: Fundamentos sobre el Service Worker y la optimización de la experiencia web como PWA.
+
+## Componentes Técnicos
+- Documentación sobre la gestión de datos, validación de esquemas con Zod, separación de responsabilidades en los componentes y cómo interactúan React y Astro.
+
+Esta documentación está diseñada para proporcionar una comprensión clara y completa del funcionamiento interno del portal, así como para facilitar la personalización y el despliegue del mismo.
+
+**Sources:**
+- [Índice de Documentación](https://github.com/rodnm/rodnm.github.io/blob/main/docs/00-Indice.md)
+- [Gestión de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,3,0.3333333333333333
+q0007,¿Cuáles son los dos temas principales cubiertos en la documentación?,es,docs_00-Indice,"Los dos temas principales cubiertos en la documentación del portafolio son:
+
+1. **Guías Prácticas de Configuración y Despliegue**:
+   - Estas guías proporcionan instrucciones paso a paso sobre cómo implementar el portafolio en un repositorio de GitHub, así como detalles sobre la configuración necesaria para el despliegue en GitHub Pages.
+
+2. **Teoría Web y Arquitectura**:
+   - Este tema profundiza en las decisiones de ingeniería detrás del desarrollo del portafolio. Incluye descripciones sobre la arquitectura de software, el patrón de Generación de Sitios Estáticos (SSG) y la Arquitectura de Islas, así como la gestión de datos y el uso de tecnologías clave como Astro, React y Tailwind CSS.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [00 Indice](https://github.com/rodnm/rodnm.github.io/blob/main/docs/00-Indice.md)",5,5,True,True,False,0,0.0
+q0008,¿Qué se explica en la sección 'Arquitectura Base y Teoría de Islas (Astro)'?,es,docs_00-Indice,"## Arquitectura Base y Teoría de Islas (Astro)
+
+En esta sección se describe la arquitectura de la cartera, que se basa en **Astro**, un generador de sitios estáticos optimizado. La principal característica de Astro es que minimiza la cantidad de JavaScript enviado al cliente, lo que resulta en un rendimiento mejorado y una mejor indexación para SEO.
+
+### Arquitectura de Islas (""Islands Architecture"")
+Astro introduce el concepto de ""Arquitectura de Islas"", donde el contenido se puede imaginar como un mar (HTML estático) con ""islas de interactividad"" (componentes, como React o Svelte). 
+
+- **Ocean Static:** El diseño general, textos y encabezados del portafolio son estáticos, sirviéndose del formato `.astro` para renderizar HTML sin enviar JavaScript al cliente.
+- **Islas de Interactividad:** Elementos interactivos, como un botón de ""Modo Oscuro"" (`ToggleTheme.tsx`), son considerados islas. 
+
+La hidratación (proceso en el que un componente React toma control de parte del HTML que ya se ha renderizado) se maneja de manera granular, permitiendo que solo se cargue y se procese el JavaScript necesario. Ejemplo de la directiva `client:*` utilizada en Astro:
+
+- `<Hero data={personalInfo} />`: no envía React.js al navegador.
+- `<ToggleTheme client:load />`: envía solo el JavaScript necesario para cargar el botón cuando se accede a la página.
+- `<ImageCarousel client:visible />`: hidrata el componente solo al hacerse visible en la pantalla.
+
+Este enfoque optimiza el rendimiento al reducir la cantidad de JavaScript, lo que proporciona un tiempo de carga significativamente menor en comparación con un enfoque tradicional de SPA (Single Page Application).
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,False,0,0.0
+q0009,What are the two main categories of information available in the Portafolio V1 technical documentation?,en,docs_00-Indice,"The technical documentation for Portafolio V1 can be categorized into two main sections:
+
+## 1. Practical Guides (Configuration and Deployment)
+- This section provides step-by-step instructions for deploying the portfolio. Examples include:
+  - **Getting Started with Git to GitHub**: Instructions for pushing your portfolio to a cloud repository.
+  - **GitHub Pages Deployment Guide**: Key configurations needed before deploying and automatic publication using GitHub Actions.
+
+## 2. Web Theory and Architecture (Internal Wiki)
+- This section explores the underlying software architecture and design decisions of the project. It includes:
+  - **Architectural Overview**: A quick summary of the stack.
+  - **Astro Architecture and Islands Theory**: Conceptual exploration of the Static Site Generation (SSG) pattern and partial hydration.
+  - **Component Responsibilities**: Insights into props flow, state, and the interaction between Astro and React.
+  - **Data Management with Zod**: Overview of the View-Model pattern with type validation.
+  - **Visual Styles Engineering**: Deep dive into the utility-first approach of Tailwind CSS.
+  - **PWA Deployment and Theory**: Explanation of Service Workers and performance optimization techniques.
+
+These two categories collectively cover both practical tasks and theoretical foundations related to the portfolio's development.
+
+**Sources:**
+- [00 Indice](https://github.com/rodnm/rodnm.github.io/blob/main/docs/00-Indice.md)",5,5,True,True,True,1,1.0
+q0010,Which document provides step-by-step instructions for uploading a portfolio to a repository?,en,docs_00-Indice,"The document that provides step-by-step instructions for uploading a portfolio to a repository is the **""06 Primeros Pasos Git""** document. Here are the key steps outlined in it:
+
+## Steps to Upload Your Project to GitHub
+
+1. **Create the Repository on GitHub**
+   - Go to [github.com/new](https://github.com/new).
+   - Enter a name for your repository (e.g., `my-portfolio`).
+   - **Do not** check any boxes (README, .gitignore, License) because they are already included.
+   - Click on **Create repository**.
+
+2. **Upload Your Code**
+   - Run the following commands in your terminal one by one:
+     ```bash
+     # 1. Ensure all files are in the staging area
+     git add .
+     # 2. Save the changes
+     git commit -m ""My portfolio ready to launch 🚀""
+     # 3. Rename the main branch to 'main' (if it isn't already)
+     git branch -M main
+     # 4. Connect your folder with GitHub (REPLACE URL)
+     # Copy the URL provided by GitHub in step 1
+     git remote add origin https://github.com/YOUR_USER/REPO_NAME.git
+     # 5. Push the files
+     git push -u origin main
+     ```
+
+3. **Completion**
+   - Refresh the GitHub page to see your files.
+
+For a detailed guide, you can refer to the document directly.
+
+**Sources:**
+- [06 Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,4,False,True,False,0,0.0
+q0011,What is the purpose of the 'Componentes y Separación de Responsabilidades' document?,en,docs_00-Indice,"The document ""Componentes y Separación de Responsabilidades"" outlines the architecture of components used in the portfolio website and the separation of responsibilities within the code. Here’s an overview of its purpose:
+
+## Purpose of the Document
+- **Component-Based Development:** It introduces the concept of component-based development, emphasizing that modern web software relies on modular UI blocks that encapsulate their own logic, styles, and markup.
+
+- **Difference Between Component Types:**
+  - **Astro Components (`.astro`):**
+    - Used for stateless and presentational structures.
+    - Operate on the server-side during the build process and do not maintain real-time memory.
+  - **React Components (`.tsx`):**
+    - Designed for stateful components requiring reactivity and client-side interactivity.
+    - Utilize React's Virtual DOM to manage updates and performance efficiently.
+
+- **Data Flow Architecture:**
+  - The document explains a unidirectional top-down data flow using Props:
+    1. The main page receives the complete data collection.
+    2. Layout components extract and pass down specific data segments to child components.
+    3. Child components receive and utilize specific data for rendering.
+
+- **Decoupling and State Management:**
+  - It emphasizes preventing strong coupling between components, leading to better maintainability, where only the failing component impacts the system rather than the entire page.
+
+This document serves to clarify how components are structured and interact within the portfolio, ensuring a modular and maintainable codebase.
+
+**Sources:**
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)",5,4,False,True,True,5,0.2
+q0012,¿Cuál es el objetivo principal de Astro según el documento?,es,docs_01-Arquitectura-Astro,"El objetivo principal de Astro es proporcionar un framework web optimizado para sitios orientados a contenido estático, con un enfoque particular en minimizar la cantidad de JavaScript que se envía al cliente. Esto se logra a través de su arquitectura de generación de sitios estáticos (SSG) y el uso de un modelo de ""Arquitectura de Islas"", que permite que componentes interactivos se carguen de manera eficiente solo cuando son necesarios.
+
+### Características clave de Astro:
+- **Reducción de JavaScript:** En lugar de cargar JavaScript de forma indiscriminada, Astro entrega HTML y CSS estático primero, mejorando significativamente la velocidad de carga y el rendimiento.
+- **SEO Optimizado:** Al generar HTML estático, los motores de búsqueda pueden indexar el contenido sin necesidad de ejecutar JavaScript, lo que mejora la visibilidad en los resultados de búsqueda.
+- **Arquitectura de Islas:** Astro permite tener partes interactivas (componentes de React o Svelte) que se hidratan de manera granular, según la necesidad del usuario, optimizando así el uso de recursos.
+
+Estas designaciones hacen de Astro una opción eficaz para desarrolladores que buscan crear sitios rápidos y eficientes.
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,1,1.0
+q0013,¿Qué significa SSG y cómo funciona en el contexto de este portafolio?,es,docs_01-Arquitectura-Astro,"## Significado y Funcionamiento de SSG en el Portafolio
+
+**SSG (Static Site Generation)** es una técnica utilizada para generar sitios web estáticos. En el contexto del portafolio de Rodrigo Norabuena, SSG se implementa utilizando Astro. A continuación, se describen los principales aspectos de cómo funciona SSG en este portafolio:
+
+### Funcionamiento de SSG
+
+1. **Compilación del Contenido:**
+   - Al ejecutar `npm run build`, Astro procesa todo el TypeScript y JavaScript en el servidor durante el tiempo de compilación. Esto permite evaluar la estructura de la página y generar contenido dinámico basado en datos predefinidos.
+
+2. **Generación de HTML Estático:**
+   - El resultado de esta compilación es un conjunto de archivos HTML que son puramente estáticos y se guardan en la carpeta `dist/`. Esto significa que el contenido del sitio está pregenerado y se puede servir rápidamente a los visitantes sin requerir procesamiento en el cliente.
+
+3. **Ventajas de SSG:**
+   - **Rendimiento Mejorado:** Las páginas cargan más rápido ya que el navegador solo necesita procesar HTML y CSS antes de ejecutar cualquier JavaScript.
+   - **SEO Optimizado:** Los motores de búsqueda pueden indexar el contenido sin necesidad de ejecutar JavaScript, lo que mejora la visibilidad y el ranking en las búsquedas.
+
+### Arquitectura de Islas
+
+- **Islas de Interactividad:** A pesar de que el contenido general es estático, ciertas partes del sitio, como componentes React interactivos (`ToggleTheme.tsx`), se inyectan como ""islas"". Esto permite que solo se cargue el JavaScript necesario para esos componentes interactivos, dejando el resto del sitio sin carga de JS adicional.
+
+### Resumen
+
+El uso de SSG en combinación con la arquitectura de islas en Astro permite que el portafolio de Rodrigo sea rápido, eficiente y amigable para SEO, mejorando así la experiencia general del usuario.
+
+**Sources:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,4,0.25
+q0014,¿Qué es la 'Arquitectura de Islas' y cómo la aplica Astro en este portafolio?,es,docs_01-Arquitectura-Astro,"## Arquitectura de Islas en Astro
+
+La **Arquitectura de Islas** es un concepto clave en el diseño del portafolio y se utiliza para optimizar la carga de JavaScript en las aplicaciones web. A continuación, se detallan los aspectos principales de esta arquitectura y su aplicación en el portafolio construido con Astro:
+
+### Conceptos Fundamentales
+- **Parámetro Estático**: La mayor parte del contenido del portafolio, como el diseño y los textos, se genera como HTML estático. Esto se logra a través de **Astro**, que permite enlazar datos y renderizar componentes sin enviar JavaScript al cliente.
+  
+- **Islas de Interactividad**: Solo aquellos componentes que necesitan ser interactivos (por ejemplo, botones o sliders) son tratados como ""islas"". Cada isla se hidrata de manera independiente, lo que significa que solo se carga y ejecuta el JavaScript necesario para esas partes interactivas.
+
+### Ejemplo de Implementación
+- **Estructura Estática**: Componentes como el layout y textos se implementan utilizando componentes `.astro`, que producen HTML sin javascript adicional.
+  
+- **Hidratación Condicionada**: Utilizando directivas `client:*`, Astro permite que JavaScript se cargue solo cuando es necesario:
+  - Por ejemplo:
+    ```astro
+    <ToggleTheme client:load />
+    ```
+    Este componente se cargaría tan pronto como la página esté lista, mejorando la velocidad de la carga inicial.
+
+### Ventajas
+- **Rendimiento Mejorado**: Al reducir la cantidad de JavaScript enviado al navegador, se logra una carga más rápida y eficiente del contenido.
+- **Mejor SEO**: Dado que el contenido estático se puede leer directamente por los motores de búsqueda, el SEO se beneficia notablemente.
+
+### Resumen
+La Arquitectura de Islas permite a Astro combinar la eficiencia de un sitio estático con la interactividad necesaria en componentes específicos, haciendo que el portafolio sea altamente optimizado tanto para la experiencia del usuario como para el rendimiento general.
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0015,What is the core technology used to build this portfolio's architecture?,en,docs_01-Arquitectura-Astro,"The portfolio is built using three core technologies:
+
+## Core Technologies
+- **Astro v5**: This is the primary static site generator (SSG) for the portfolio, optimizing for minimal JavaScript delivery to the client.
+- **Tailwind CSS v4**: A utility-first CSS framework used for styling, offering a modern and premium design.
+- **React v19**: Utilized for creating interactive components within the site, which function as ""interactive islands"" in the overall architecture.
+
+## Architecture Overview
+- **Static Site Generation (SSG)**: The portfolio is rendered into static HTML files at build time, which enhances performance and SEO.
+- **Islands Architecture**: This hybrid approach allows Astro to deliver static content while selectively hydrating React components only when needed, reducing the amount of JavaScript sent to the client.
+
+These choices lead to a fast-loading, SEO-friendly, and modern portfolio web application.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,4,True,True,True,2,0.5
+q0016,How does Astro's SSG approach differ from traditional React SPAs in terms of rendering?,en,docs_01-Arquitectura-Astro,"Astro's approach to Static Site Generation (SSG) significantly contrasts with traditional React Single Page Applications (SPAs) in the following ways:
+
+## Rendering Approaches
+
+### 1. Build Time Execution
+- **Astro (SSG)**: When you run `npm run build`, Astro executes the TypeScript and JavaScript on the server at build time. It compiles all static content into raw HTML files. This means the majority of the content is ready for users as soon as they load the site.
+- **React (SPA)**: In contrast, a traditional React SPA primarily uses Client-Side Rendering (CSR), where much of the rendering occurs in the user's browser. This can lead to slower initial page loads because the application has to stream a significant amount of JavaScript before rendering.
+
+### 2. Output Format
+- **Astro**: Produces just HTML and CSS during the build process, leading to faster load times and improved performance metrics (e.g., First Contentful Paint, Time to Interactive).
+- **React**: Often returns large JavaScript bundles for the client, which results in longer loading times as the browser must wait for JavaScript to process and render the UI.
+
+### 3. SEO Benefits
+- **Astro**: Excellent for SEO since search engines can index static HTML content without executing JavaScript.
+- **React**: SPAs may face SEO challenges because search engines might not execute JavaScript during indexing, potentially missing important content.
+
+### 4. Island Architecture
+- **Astro’s Islands Architecture**: Astro allows for partial hydration, meaning interactive components (e.g., a button for dark mode) are loaded separately as ""islands"" of interactivity. This helps minimize the amount of JavaScript sent to the client. For example, a component can be rendered statically while its JavaScript is only loaded when needed.
+- **React**: React applications generally bundle all components and their JavaScript together. This includes even components that may not immediately need interactivity, increasing the initial loading payload.
+
+## Summary
+- Astro emphasizes building the entire static site and sending minimal JavaScript for interactive elements, thus enhancing performance and SEO.
+- Traditional React SPAs rely heavily on client-side JavaScript for rendering, which can slow down load times and pose SEO challenges.
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0017,What is the purpose of the `client:*` directive in Astro?,en,docs_01-Arquitectura-Astro,"The `client:*` directive in Astro is used to control the hydration of components, specifying how and when certain components should be loaded and made interactive in the browser. Here's a breakdown of its purpose and functionality:
+
+## Purpose of `client:*` Directive
+
+- **Granular Hydration**: The directive allows you to hydrate components at different times based on user interaction or visibility rather than loading all JavaScript upfront.
+- **Performance Optimization**: By only sending the JavaScript needed for specific interactive components, the overall load time and performance of the site can be improved significantly.
+
+## Usage Examples
+
+1. **`client:load`**: This directive ensures that the component is hydrated as soon as the page loads. For example:
+   ```astro
+   <ToggleTheme client:load />
+   ```
+   This will send the necessary JavaScript to hydrate the `ToggleTheme` button immediately.
+
+2. **`client:visible`**: This directive hydrates the component only when it becomes visible in the viewport (e.g., on scroll). For example:
+   ```astro
+   <ImageCarousel client:visible />
+   ```
+   This helps in reducing the initial JavaScript payload and improves loading times for non-visible components.
+
+3. **Static Content and Interactive Islands**: Components that don't require JavaScript can be kept as static, while only interactive parts (like buttons or dynamic components) are hydrated using these directives.
+
+The combination of these directives is fundamental to Astro's ""Islands Architecture,"" which blends static site generation with targeted interactivity.
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,1,1.0
+q0018,¿Cuál es la teoría principal de flujo de datos arquitectónica que sigue el portafolio y cómo se implementa?,es,docs_02-Componentes,"La teoría principal de flujo de datos arquitectónica que sigue el portafolio es la **comunicación descendente unidireccional (Top-Down)** a través de **Props**. Así es como se implementa:
+
+## Descripción de la Implementación
+
+1. **Página Principal (`Index.astro`):**
+   - Esta página recibe una colección completa de registros, que puede ser un árbol de datos (por ejemplo, `spanishData`).
+
+2. **Layout/Contenedor (`Portfolio.astro`):**
+   - Este componente recibe la colección de datos y extrae porciones específicas para manejar la información de manera más lógica (por ejemplo, extrae proyectos del resto de los datos).
+
+3. **Componente Hijo (`Projects.astro`):**
+   - Este componente recibe exclusivamente las propiedades del objeto `projects` (un array de proyectos) y realiza un mapeo a tarjetas individuales (`ProjectCard`).
+
+### Beneficios de Este Enfoque
+
+- **Desacoplamiento:** Este modelo de comunicación evita el ""acoplamiento fuerte"", previniendo mutaciones de datos incontroladas (side effects). Si un componente presenta un error, solo afecta a ese bloque específico, sin colapsar la página completa.
+
+- **Control de Estado:** La inyección de dependencias mediante Props asegura que los datos sean dirigidos de manera controlada a través de la jerarquía de componentes.
+
+## Resumen
+
+En resumen, el flujo de datos unidireccional permite una estructura de componentes más predecible y mantenible, facilitando la construcción de interfaces de usuario más robustas.
+
+**Sources:**
+- [Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)",5,5,True,True,True,3,0.3333333333333333
+q0019,¿Qué son los componentes de Astro y cuál es su principal diferencia con los componentes de React en este portafolio?,es,docs_02-Componentes,"## Componentes de Astro y su Diferencia con Componentes de React
+
+### Componentes de Astro (`.astro`)
+- **Teoría de Uso:** Útiles para crear componentes sin estado (stateless) y presentacionales.
+- **Funcionamiento Interno:** Se ejecutan del lado del servidor. Utilizan un bloque de ""Frontmatter"" delimitado por `---` para escribir TypeScript, y luego contienen HTML en una sintaxis similar a JSX.
+- **Ciclo de Vida:** Su ciclo de vida termina durante la construcción (`npm run build`), generando HTML estático que no mantiene estado ni controla interacciones en tiempo real.
+
+### Componentes de React (`.tsx`)
+- **Teoría de Uso:** Diseñados para ser componentes con estado (stateful), permitiendo interactividad y reactividad dependiendo del ciclo de vida del cliente (como eventos `onclick`).
+- **Control de Estado Subyacente:** React utiliza un Virtual DOM para manejar el estado. Cuando hay un cambio, React compara el Virtual DOM con el actual para actualizar la interfaz de manera eficiente.
+  
+### Flujo de Datos
+- **Inyección de Props:** El portafolio utiliza un flujo de datos unidireccional de arriba hacia abajo. Los datos son pasados desde la página principal a los componentes hijos, evitando acoplamientos fuertes.
+
+### Resumen de Diferencias
+- **Estado y Reactividad:** Astro está orientado a componentes sin estado, mientras que React permite el manejo del estado y la interacción dinámica.
+- **Ciclo de Vida:** Astro se renderiza en el servidor y se convierte en HTML estático, mientras que los componentes de React funcionan en el cliente y gestionan su propio ciclo de vida.
+
+**Sources:**
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,1,1.0
+q0020,¿Cómo se benefician los componentes de React de un 'Virtual DOM'?,es,docs_02-Componentes,"Los componentes de React se benefician del uso del 'Virtual DOM' por varias razones clave relacionadas con la eficiencia en la actualización de la interfaz de usuario:
+
+## Beneficios del Virtual DOM en React
+
+- **Actualizaciones Selectivas**: Cuando el estado de un componente cambia, React no actualiza todo el DOM sino que primero crea un Virtual DOM, donde calcula las diferencias con el DOM real. Esto permite actualizar sólo las partes modificadas, minimizando operaciones costosas de repintado y reflujo.
+
+- **Rendimiento Optimizado**: Al limitar el número de actualizaciones al DOM real, se reduce el uso de recursos del navegador, lo que resulta en una experiencia más fluida para el usuario.
+
+- **Evita Repintados Innecesarios**: React analiza y decide qué cambios hacer basándose en las diferencias entre el Virtual DOM y el DOM actual, evitando así repintados visuales que podrían ser lentos y perjudiciales para el rendimiento.
+
+- **Ciclo de Vida de Componente**: El Virtual DOM permite que los componentes de React mantengan un ciclo de vida controlado, lo que facilita la implementación de lógica orientada a la interacción y la reactividad.
+
+Estos beneficios derivan de cómo React maneja la lógica de renderizado por medio del Virtual DOM, lo que resulta en aplicaciones web más rápidas y eficientes.
+
+**Sources:**
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)",5,5,True,True,True,3,0.3333333333333333
+q0021,What is the theoretical use case for Astro components in this portfolio?,en,docs_02-Componentes,"## Theoretical Use Case for Astro Components in the Portfolio
+
+The use of Astro components in this portfolio serves several optimal functions, leveraging the benefits of static site generation (SSG) and the ""Islands Architecture."" Here are the key theoretical use cases:
+
+- **Performance Optimization**:
+  - Astro components produce static HTML at build time, resulting in significantly faster page loads. This is crucial for providing a seamless user experience.
+  - The architecture minimizes the amount of JavaScript sent to the client, which improves the First Contentful Paint (FCP) and Time to Interactive (TTI).
+
+- **SEO Advantages**:
+  - Static HTML pages are indexed more effectively by search engines, as they do not require JavaScript execution. This enhances the portfolio's visibility in search results.
+
+- **Islands of Interactivity**:
+  - The portfolio employs an ""Islands Architecture,"" where only specific parts of the page (React components) are interactive. For example, while the main layout and textual content are static (rendered with `.astro` components), interactive features, like the ""Dark Mode"" button, are activated when necessary.
+  - This granular hydration allows for optimally loading only the required JavaScript, which keeps the overall site lightweight and responsive.
+
+- **Reusable Components**:
+  - Astro components can be reused throughout the project, promoting consistent design and efficient maintenance.
+  - This modularity means developers can create complex UI elements without inflating the site's performance costs.
+
+- **User Interaction**:
+  - Interactive elements, such as the image carousel, only load their JavaScript when they are in the viewport or upon user actions, which aligns with the performance-first philosophy of Astro.
+
+In summary, the theoretical use case for Astro components in this portfolio revolves around providing a fast, SEO-friendly, and highly interactive user experience while keeping the implementation simple and maintainable.
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,4,True,True,False,0,0.0
+q0022,Explain the role of Props in the portfolio's data flow.,en,docs_02-Componentes,"## Role of Props in Data Flow
+
+In the portfolio, Props play a crucial role in managing data flow and component communication. Here are the key aspects:
+
+- **Unidirectional Data Flow**: The architecture promotes a top-down unidirectional flow of data, meaning that data is passed from parent components to child components exclusively through Props. This ensures a predictable structure and easier debugging.
+
+- **Structure of Data Flow**:
+  1. **Index Page**: The primary page (`Index.astro`) receives the complete dataset (e.g., the entire `spanishData`).
+  2. **Layout/Container**: The layout or container component (`Portfolio.astro`) takes the complete dataset and extracts specific portions as needed (e.g., selecting `projects`).
+  3. **Child Component**: The child component (`Projects.astro`) receives only the properties for `projects` (like an `Array<Project>`) and iterates over them to display individual cards (`ProjectCard`).
+
+- **Decoupling of Components**: By using Props, the components remain loosely coupled, avoiding strong dependencies. This decoupling prevents uncontrolled data mutations and side effects, allowing individual components to function independently. If a component fails, it only impacts that specific part without collapsing the entire page.
+
+This structured approach enhances maintainability and readability of the code, aligning with modern React practices.
+
+**Sources:**
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)",5,5,True,True,True,1,1.0
+q0023,What is the advantage of the described data flow model in terms of component failure?,en,docs_02-Componentes,"## Advantages of the Data Flow Model Regarding Component Failure
+
+The data flow architecture employed in the portfolio website has several advantages concerning component failure:
+
+- **Top-Down Unidirectional Data Flow**: The data flow is strictly unidirectional from parent to child components through props. This structure means that if one component fails, only that specific component breaks instead of affecting the entire application or page. This isolation reduces the risk of cascading failures.
+
+- **Centralized State Management**: The management of all data is centralized in a single file (`src/config.ts`), which acts as the Source of Truth (SOT). This structure ensures that all components refer to a consistent state, preventing inconsistencies or erroneous data that could lead to failures.
+
+- **Strict Validation with Zod**: The use of Zod for runtime validation ensures data integrity. If an incorrect data type or broken data structure is introduced (e.g., a malformed URL), it will trigger an error during the build process. This preemptive validation helps maintain the stability of the application, as it ensures that only valid data is passed to components.
+
+- **Reduced Coupling**: The architecture minimizes strong coupling between components. Components access only the data they require from their parent, which limits dependencies and improves robustness. This design reduces unexpected side effects, making it easier to identify and fix issues if a component fails.
+
+Overall, the combination of these principles leads to a more resilient and maintainable application. Even if a single component encounters a failure, the rest of the application continues to function correctly.
+
+**Sources:**
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)
+- [03 Gestión de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,5,0.2
+q0024,¿Cuál es la función principal del archivo `src/config.ts` en este proyecto?,es,docs_03-Gestion-de-Datos,"El archivo `src/config.ts` en este proyecto cumple varias funciones clave relacionadas con la gestión del contenido del portafolio:
+
+## Funciones principales de `src/config.ts`:
+
+- **Centralización de Datos**: Este archivo actúa como la única fuente de verdad (SOT) para toda la información del portafolio, similar a una base de datos NoSQL. Aquí se definen y exportan estructuras semánticas para los datos, garantizando que todos los componentes consuman esta información de manera coherente.
+
+- **Contenido Personalizable**: Permite editar toda la información relevante del portafolio, que incluye:
+  - Información personal (nombre, título, descripción).
+  - Enlaces de contacto (email, GitHub, LinkedIn).
+  - Detalles sobre experiencia laboral, educación, proyectos y habilidades.
+
+- **Validación de Datos**: Utiliza **Zod** para validar los datos en tiempo de construcción (build time). Esto asegura que cualquier error en los datos (como tipos incorrectos) genere una alerta en la consola y detenga el proceso de construcción, lo que ayuda a mantener la integridad de los datos.
+
+En resumen, `src/config.ts` es esencial para la configuración y la estructura de datos del portafolio, asegurando que toda la información sea correcta y bien organizada.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [Gestión de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)",5,5,True,True,True,4,0.25
+q0025,¿Qué tecnología se utiliza para la validación de datos en tiempo de compilación y cómo funciona?,es,docs_03-Gestion-de-Datos,"## Tecnología de Validación de Datos en Tiempo de Compilación
+
+En el portafolio de Rodrigo Norabuena, se utiliza la biblioteca **Zod** para la validación de datos en tiempo de compilación. A continuación se explican sus características y funcionamiento:
+
+### 1. Patrón Vista-Modelo
+- **Centralización de Datos:** Todo el sistema de persistencia en memoria está consolidado en el archivo `src/config.ts`, utilizando un patrón que imita una base de datos NoSQL, donde se define una única fuente de la verdad (SOT).
+  
+### 2. Esquemas Rígidos con Zod
+- **Validación de Datos:** Se definen esquemas rígidos en `config.ts`, como el `ProjectSchema`, que aseguran que los datos ingresados cumplen con tipos específicos. Por ejemplo:
+  ```typescript
+  const ProjectSchema = z.object({
+    title: z.string(),
+    description: z.string(),
+    link: z.string().url(),
+    image: ImageMetadataSchema,
+  });
+  ```
+- **Verificación de Errores en Compilación:** Zod se utiliza para validar los datos durante la fase de construcción. Si, al editar el código, un dato se ingresa incorrectamente (por ejemplo, un enlace no válido), el proceso de construcción se abortará y se lanzará un error, previniendo que el código defectuoso se despliegue.
+
+### 3. Integridad de los Registros
+- Este enfoque obliga a los desarrolladores a mantener la integridad de los datos y asegura que no haya enlaces rotos en el sitio, garantizando un 0% de imperfecciones en el árbol de dependencias.
+
+### Beneficios
+- **Prevención de Errores:** La validación rigurosa evita que se suban datos inválidos, asegurando un comportamiento consistente y predecible en la aplicación.
+
+**Fuentes:**
+- [03-Gestion-de-Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0026,¿Cómo se maneja la internacionalización (i18n) y la sustitución de datos entre idiomas en el proyecto?,es,docs_03-Gestion-de-Datos,"La gestión de la internacionalización (i18n) en el proyecto se realiza a través de un sistema estructurado de sustitución de datos que permite soportar contenido en múltiples idiomas, específicamente español e inglés. A continuación, se detallan los aspectos clave de este mecanismo:
+
+## Internacionalización Estática (i18n)
+
+- **Datos estructurados**: Los datos bilingües están organizados dentro de un archivo central (`src/config.ts`) que actúa como la única fuente de verdad (SOT). Este archivo define los objetos `spanishData` y `englishData`, que cumplen con la misma estructura de interfaz (`PortfolioDataSchema`).
+  
+- **Inyección de propiedades**: Durante la generación de la página, Astro inyecta una propiedad denominada `currentLocale`, que puede ser `es` o `en`, a los componentes. Esto permite al algoritmo interno del enrutador decidir qué conjunto de datos utilizar al renderizar la página.
+
+- **Rutas estáticas separadas**: Para cada idioma, se generan rutas estáticas separadas (por ejemplo, `/` para español y `/en/` para inglés). Esto implica que el contenido ya está codificado en el idioma respectivo antes de enviar la página al cliente, mejorando así el rendimiento y la SEO.
+
+- **No dependencia de archivos externos**: A diferencia de otros enfoques que requieren cargar archivos `.json` dinámicamente en el navegador, este método evita costos de rendimiento al tener el contenido ya disponible en el HTML generado.
+
+## Resumen del Proceso
+
+1. **Definición de datos**: Los textos y datos del portafolio se definen una sola vez en `config.ts`, evitando el uso de cadenas mágicas en el código.
+
+2. **Propiedades de los componentes**: Los componentes se comunican de manera unidireccional, recibiendo los datos apropiados basados en el idioma actual como `props`.
+
+3. **Inclusión durante la construcción**: El contenido específico del idioma se inserta en el momento de la construcción de la página, asegurando que cada página sea entregada al navegador ya localizada.
+
+Esto resulta en una experiencia de usuario más rápida y fluida, con un contenido que está listo para ser indexado adecuadamente por los motores de búsqueda.
+
+**Sources:**
+- [03 Gestion de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0027,What is the purpose of `src/config.ts` in this project's architecture?,en,docs_03-Gestion-de-Datos,"## Purpose of `src/config.ts`
+
+In the architecture of Rodrigo Norabuena's portfolio website, `src/config.ts` serves multiple critical functions:
+
+- **Centralized Data Management**: 
+  - Acts as the single source of truth (SOT) for all portfolio data, similar to an in-memory NoSQL database.
+  - Contains structured data such as personal information, project details, experience, education, and skills.
+
+- **Validation Using Zod**:
+  - Incorporates Zod for runtime validation of the data schema, ensuring that the data adheres to specified types and formats. This helps prevent errors during development and deployment.
+  - For example, Zod schemas are defined for projects to enforce the correct type of data (like ensuring URLs are valid).
+
+- **Localized Data Handling**:
+  - Supports multilingual content management by structuring data in different languages, facilitating easy internationalization (i18n).
+
+- **Dependency Injection for Components**:
+  - All components in the application read data from this file, promoting a clean architecture where components are not reliant on hardcoded values.
+
+- **Error Prevention**:
+  - If the data in `src/config.ts` is incorrectly configured, it will raise errors during the build phase, preventing broken pages from being deployed to production.
+
+### Summary of Configuration Capabilities:
+- Personal Information
+- Contact Links
+- Work Experience
+- Education
+- Projects
+- Skills
+
+The design philosophy stresses the separation of models (data) from views (UI), ensuring a well-structured and maintainable codebase.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [03 Gestion de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,5,0.2
+q0028,How does Zod contribute to data integrity in this Astro project?,en,docs_03-Gestion-de-Datos,"Zod contributes to data integrity in this Astro project by enforcing strict data validation and structured contracts. Here's how it operates within the project:
+
+## Key Contributions of Zod to Data Integrity
+
+- **Structured Contracts**: Zod allows the definition of ""structured contracts"" using schemas. For instance, the `PortfolioDataSchema` ensures that the data being processed adheres to specified rules, such as data types and formats. 
+  - Example of validations:
+    - `email: z.string().email()` ensures that the email is a valid string format.
+    - `link: z.string().url()` ensures that the link is a valid URL.
+
+- **Build-Time Validation**: During the build process, the project validates the data using Zod. If there is any incorrect data, such as a broken link or an improperly formatted value in `spanishData`, the validation will fail, thus preventing the deployment of a broken page to the production environment.
+
+- **Error Handling**: By catching errors early in the build phase, Zod provides a safety net that ensures developers can fix issues before they reach end-users. This enhances the stability and reliability of the portfolio site.
+
+## Summary
+
+By utilizing Zod for validation, the project achieves higher data integrity and reliability, making sure that only correctly structured and valid data will be processed and rendered.
+
+**Sources:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,False,0,0.0
+q0029,Explain the symmetric resolution mechanism for multi-language support.,en,docs_03-Gestion-de-Datos,"The symmetric resolution mechanism for multi-language support in Rodrigo Norabuena's portfolio is designed to use a symmetrical substitution system. Here's how it works:
+
+## Overview of the Symmetric Resolution Mechanism
+
+- **Data Structure**: The mechanism utilizes structured interfaces defined in `PortfolioDataSchema`, which allows for the separation of language-specific content into Spanish and English datasets (`spanishData` and `englishData`).
+
+- **Dependency Injection**: Astro components receive a property called `currentLocale`. Based on this locale, the internal routing algorithm retrieves either the Spanish or English data object and injects it into the rendering engine. This follows the Dependency Injection pattern.
+
+- **Static Generation**: The architecture does not rely on dynamically loading language data via JSON at runtime. Instead, two distinct static routes are compiled at build time:
+  - The main route (e.g., `/`) retrieves data for the Spanish locale.
+  - A secondary route (e.g., `/en/`) retrieves data for the English locale.
+
+- **Performance Optimization**: By embedding texts directly during the build process, it eliminates the overhead of translating texts on-the-fly in the user's browser, leading to improved performance.
+
+This mechanism allows seamless and efficient support for multiple languages while maintaining a high level of performance, making it easier to manage and ensure the integrity of the content across languages.
+
+**Sources:**
+- [03 Gestion de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0030,¿Cuál es la principal diferencia entre el paradigma Utility-First de Tailwind CSS y la semántica clásica del CSS?,es,docs_04-Estilos-Tailwind,"## Diferencias entre Utility-First de Tailwind CSS y CSS semántico clásico
+
+La principal diferencia entre el paradigma Utility-First de Tailwind CSS y la semántica clásica del CSS se encuentra en su enfoque hacia el diseño y la organización de las reglas de estilo:
+
+### 1. Enfoque de Estilos
+- **Utility-First (Tailwind CSS)**:
+  - Utiliza clases de utilidad como `flex`, `h-4`, `w-4` para aplicar estilos directamente en el HTML.
+  - Bonificación del aislamiento de estilos que elimina el problema conocido como ""Cascada Invasiva"". Cada clase se centra en una única propiedad de estilo, lo que hace que los cambios sean previsibles y evita efectos laterales visuales inesperados.
+
+- **CSS Semántico Clásico**:
+  - Se basa en el uso de clases semánticas (como `.card-perfil`) que agrupan múltiples propiedades CSS. Esto implica que al modificar una clase, posiblemente afecte a múltiples elementos que dependen de esa misma clase.
+  - Se considera que favorece la ""Separación de Tecnologías"", donde el HTML define la estructura y el CSS se mantiene en archivos separados para los estilos.
+
+### 2. Compilación y Tamaño del Archivo CSS
+- **Tailwind CSS**:
+  - Implementa un compilador JIT (Just-In-Time) que genera solo las clases utilizadas en el proyecto. Esto significa que el archivo CSS producido es ligero y solo contiene las reglas necesarias.
+  
+- **CSS Semántico**:
+  - Tiende a incluir una hoja de estilos más grande y puede llevar código CSS residual o no utilizado que aumenta el tamaño del archivo final.
+
+### 3. Previsibilidad y Mantenimiento
+- **Utility-First**:
+  - Aumenta la previsibilidad al encapsular estilos y crear componentes fácilmente mantenibles.
+  
+- **CSS Semántico**:
+  - Puede ser más difícil de mantener, ya que los estilos están más interconectados y son más propensos a los efectos colaterales al modificar el CSS.
+
+**Conclusión**: Utility-First de Tailwind CSS proporciona un enfoque más granular y sofisticado para construir interfaces, lo que mejora la previsibilidad y la facilidad de mantenimiento, a diferencia del enfoque más tradicional y global del CSS semántico clásico.
+
+**Sources:**
+- [04 Estilos Tailwind](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)",5,5,True,True,True,1,1.0
+q0031,¿Cómo soluciona Tailwind CSS el problema de la 'Cascada Invasiva' del CSS tradicional?,es,docs_04-Estilos-Tailwind,"Tailwind CSS aborda el problema de la 'Cascada Invasiva' del CSS tradicional mediante un enfoque de **Utility-First CSS**. A continuación se detallan cómo se logra esto:
+
+## Solución a la Cascada Invasiva
+
+- **Utilidades Funcionales**: En lugar de usar clases abstractas y globales (como en métodos tradicionales como BEM), Tailwind utiliza clases de utilidad univalentes (por ejemplo, `flex`, `h-4`, `w-4`). Esto significa que, en vez de definir estilos generales que pueden afectar a múltiples componentes y sus instancias, cada clase impacta solo al elemento que la utiliza.
+
+- **Encapsulamiento Predecible**: Las clases de utilidad encapsulan explícitamente el estilo de un componente específico, haciendo que el comportamiento visual sea 100% predecible. Esto aísla los estilos de un componente de los de otros. Por ejemplo, un cambio en el estilo de una clase como `.btn` no afectará a otros botones en el sitio, evitando efectos laterales indeseados.
+
+- **JIT Compiler (Just-In-Time)**: Durante el proceso de desarrollo y construcción, Tailwind utiliza un compilador JIT que solo genera las clases que se utilizan efectivamente en el proyecto. Al hacer esto, se evita la sobrecarga de clases CSS no utilizadas, manteniendo el estilo limpio y minimalista.
+
+## Resumen
+
+Este enfoque de diseño no solo resuelve el problema de la cascada invadida que puede surgir en CSS tradicional, sino que también mejora la mantenibilidad y claridad del código al usar clases específicas en lugar de bloques de estilo indeterminados.
+
+**Sources:**
+- [04 Estilos Tailwind](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)",5,5,True,True,True,1,1.0
+q0032,¿Qué es el compilador JIT de Tailwind CSS y cuál es su función principal?,es,docs_04-Estilos-Tailwind,"El compilador JIT (Just-In-Time) de Tailwind CSS es una característica clave que optimiza la generación de estilos en tiempo de ejecución. Su función principal consiste en crear un archivo CSS ajustado y purgado, que contiene solo las clases utilizadas en tu proyecto. A continuación, se desglosan sus funcionalidades:
+
+## ¿Cómo Funciona el Compilador JIT?
+1. **Escaneo del Código**: Durante el proceso de construcción (ejecutando el comando `npm run build`), el compilador JIT analiza todos los archivos de tu proyecto, incluidos `.astro`, `.tsx`, y la configuración en `config.ts`.
+2. **Identificación de Clases Utilizadas**: Utiliza expresiones regulares para detectar exactamente qué clases de Tailwind han sido utilizadas en el marcado.
+3. **Generación de CSS Purificado**: A partir de esta información, genera un stylesheet que solo incluye las clases efectivas, eliminando clases no invocadas y evitando el peso innecesario del archivo CSS.
+
+## Ventajas del Compilador JIT
+- Reduce el tamaño del archivo CSS final a solo unos pocos kilobytes.
+- Evita que tu proyecto incluya miles de líneas de CSS innecesarias, mejorando el rendimiento general de la aplicación.
+
+Este enfoque ayuda a mantener un proyecto limpio y eficiente, optimizando tanto el desarrollo como la carga en el navegador.
+
+**Sources:**
+- [04 Estilos Tailwind](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)",5,5,True,True,True,1,1.0
+q0033,What is the core concept behind Tailwind CSS's Utility-First approach compared to classic CSS semantics?,en,docs_04-Estilos-Tailwind,"## Core Concept of Tailwind CSS's Utility-First Approach
+
+The **Utility-First CSS** approach of Tailwind CSS offers a modern way to style applications compared to classic CSS semantics, which typically involve creating separate CSS classes and managing styles through external stylesheets. Here are the key differences:
+
+### 1. Functional Utility Classes
+- **Utility Classes**: Tailwind promotes using single-purpose utility classes (e.g., `flex`, `h-4`, `text-slate-200`) directly in your HTML. Each class provides a specific styling rule and can be combined for various designs.
+- **Classic CSS**: In traditional CSS, you'd define styles in external stylesheets, often using complex selectors. For example, you might write a class like `.card-perfil` in CSS and apply it to elements without knowing explicitly what styles it entails.
+
+### 2. Avoiding CSS Cascade Issues
+- **Isolation of Styles**: Utility classes prevent issues stemming from CSS's cascading nature, where a global style change can affect many components unintentionally. Tailwind’s utilities encapsulate styling for individual components, ensuring that they are 100% predictable.
+- **Classic Approach**: Classic CSS can lead to situations where changes in one stylesheet affect multiple components relying on the same class, leading to unexpected visual changes.
+
+### 3. Just-In-Time (JIT) Compiler
+- **Performance Optimization**: Tailwind CSS's JIT compiler generates styles on the fly during development. It scans your project files to find used classes and only includes those in the final CSS file, significantly reducing file size and loading time.
+- **Static Stylesheets**: With traditional CSS, you generally load all styles even if only a subset is being used, leading to larger file sizes.
+
+### 4. Mobile-First Design
+- **Responsive Design**: Tailwind encourages a mobile-first design philosophy, where styles are applied to small devices by default and modified with responsive utilities (e.g., `md:`, `lg:`).
+- **Adaptive Approach**: Classic CSS can make responsive design cumbersome, often requiring media queries scattered throughout styles rather than a streamlined application of responsive utilities.
+
+In summary, Tailwind CSS's utility-first approach emphasizes rapid and modular styling with functional classes, improving predictability and easing maintenance compared to traditional CSS methodologies.
+
+**Sources:**
+- [04 Estilos Tailwind](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0034,How does Tailwind CSS's JIT Compiler optimize the final CSS output?,en,docs_04-Estilos-Tailwind,"## Tailwind CSS JIT Compiler Optimization
+
+The Just-In-Time (JIT) Compiler in Tailwind CSS optimizes the final CSS output by streamlining the process of generating styles. Here’s how it works:
+
+1. **Dynamic Class Generation**: 
+   - During the build process, the JIT Compiler scans all your files (like `.astro`, `.tsx`, and configuration files) using a Node.js engine.
+   - It looks for class names and various design patterns through regular expressions, identifying precisely which classes are used in your project.
+
+2. **Class Usage Identification**:
+   - It mathematically determines which utility classes are needed based on the actual usage in your components (including variations like `bg-opacity-50`).
+  
+3. **Purged Stylesheet Creation**:
+   - Based on the identified classes, the JIT Compiler generates a **purified `.css` stylesheet** that contains only the styles that are actually utilized in your project.
+   - This results in a final stylesheet that is much smaller in size, often just a few kilobytes, eliminating thousands of unused style variables from the framework.
+
+### Benefits of Using JIT
+
+- **No Unused CSS**: The final output contains only the necessary styles, which optimizes loading times and performance.
+- **Faster Builds**: The compilation process reduces excess processing and focuses only on what is required.
+- **Utility-First Paradigm**: This method enhances the utility-first approach by allowing for better management of styles and components, preventing ""cascading"" issues common in traditional CSS setups.
+
+### Conclusion
+
+Tailwind CSS’s JIT Compiler is a powerful feature that significantly optimizes the final CSS output by only including the styles used in the project, thus enhancing performance and unloading unnecessary bloat.
+
+**Sources:**
+- [04-Estilos-Tailwind](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)",5,5,True,True,True,1,1.0
+q0035,Explain the Mobile-First strategy employed in the project's responsive design with Tailwind CSS.,en,docs_04-Estilos-Tailwind,"## Mobile-First Strategy in Tailwind CSS
+
+The project's responsive design follows a **Mobile-First** approach, which is a widely adopted industry standard in web development. Here are the key aspects of how this strategy is implemented using Tailwind CSS:
+
+- **Default Structure for Small Screens**: By default, all utility classes declare styles optimized for small screens (mobile devices). This means that the initial design and layout are tailored to ensure a good experience on mobile.
+
+- **Use of Responsive Modifiers**: To adjust the layout for larger screens, responsive modifiers (`md:`, `lg:`) are applied. These modifiers let you specify styles that will only take effect when the viewport surpasses certain breakpoints (e.g., 768px for `md`). For instance, you can change the flex direction from column to row with classes like `flex-col` switched to `md:flex-row`.
+
+- **Performance Optimization**: This Mobile-First strategy helps mitigate rendering strain on lower-processing devices by first building a robust, optimized design for mobile. Only additional styles are injected when larger screen sizes are detected, preventing unnecessary CSS from being applied.
+
+This approach leads to faster load times and better performance on mobile devices, resulting in an overall improved user experience.
+
+**Sources:**
+- [04 Estilos Tailwind](https://github.com/rodnm/rodnm.github.io/blob/main/docs/04-Estilos-Tailwind.md)",5,5,True,True,True,1,1.0
+q0036,¿Qué es Vite y cuáles son sus ventajas principales según el documento?,es,docs_05-Despliegue-y-PWA,"## ¿Qué es Vite y cuáles son sus ventajas principales?
+
+Vite es un empaquetador (bundler) ultrarrápido utilizado en el proyecto Astro para optimizar el proceso de construcción y desarrollo. A continuación, se enumeran las principales ventajas de Vite:
+
+- **Velocidad de Procesamiento**: Utiliza transformadores como esbuild, escritos en C++ o Golang, lo que permite acelerar el procesamiento en comparación con otros empaquetadores tradicionales como Webpack.
+  
+- **Hot Module Replacement (HMR)**: Ofrece un servidor local que realiza reemplazos de módulos en caliente, permitiendo modificaciones instantáneas sin recargar toda la aplicación. Esto mejora la experiencia de desarrollo al permitir cambios rápidos.
+
+- **División de Código (Code Splitting)**: En la fase de construcción final, Vite fusiona dependencias y divide el código en pequeños trozos (chunks) que se cargan según la necesidad, optimizando así el rendimiento y el tiempo de carga.
+
+- **Optimización de Imágenes y Archivos**: Vite no solo empaqueta JavaScript, sino que también se encarga de optimizar imágenes para un mejor rendimiento en la web.
+
+- **Uso de Service Workers**: Con la integración del plugin Vite PWA, se pueden guardar componentes en caché para que la aplicación funcione offline y se pueda instalar como una aplicación nativa en dispositivos móviles y de escritorio.
+
+Estas características hacen que Vite sea una herramienta muy ventajosa para el desarrollo moderno de aplicaciones web, brindando rendimiento, eficiencia y una excelente experiencia de usuario.
+
+**Sources:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [05 Despliegue y PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)",5,5,True,True,False,0,0.0
+q0037,¿Cómo funciona la caché 'Stale-While-Revalidate' implementada por el Service Worker?,es,docs_05-Despliegue-y-PWA,"La caché ""Stale-While-Revalidate"" implementada por el Service Worker opera de la siguiente manera:
+
+## Funcionalidad de la Caché ""Stale-While-Revalidate"":
+- **Intercepción de Requests:** Cuando se abre la aplicación por primera vez, el Service Worker intercepta todas las solicitudes HTTPS y almacena la página en la memoria de la aplicación del navegador.
+- **Manejo sin Conexión:** Si se pierde la conexión a Internet, el Service Worker actúa como un servidor simulado (“mock server”) y proporciona los datos previamente almacenados en caché, permitiendo que la aplicación funcione sin conexión.
+- **Revalidación:** Al recibir una nueva solicitud, el Service Worker devuelve inmediatamente la respuesta en caché (stale). Simultáneamente, realiza una solicitud de actualización en segundo plano para obtener una versión fresca del contenido (revalidate).
+
+Esto permite que la aplicación ofrezca una experiencia rápida y responsiva al usuario, incluso en situaciones de red inestables.
+
+**Beneficios Clave:**
+- Mejora la experiencia de usuario al permitir acceso instantáneo a contenido en caché.
+- Permite actualizaciones en segundo plano sin interrumpir al usuario.
+
+**Recursos:**
+- [Despliegue y PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)",5,5,True,True,True,1,1.0
+q0038,¿Qué herramientas se utilizan para la trazabilidad integrada y el pipeline de CI/CD local?,es,docs_05-Despliegue-y-PWA,"Se utilizan varias herramientas para la trazabilidad integrada y el pipeline de CI/CD local en el portafolio de Rodrigo Norabuena. Aquí están las principales:
+
+## Herramientas Utilizadas
+
+- **Git Hooks**:
+  - Utiliza `Husky` y `lint-staged` para implementar un sistema automatizado de CI/CD local.
+  
+- **Control de Calidad**:
+  - **ESLint**: Se invoca para detectar errores sintácticos y garantizar la calidad del código antes de realizar un commit (`pre-commit`).
+  - **Vitest y Playwright**: Se utilizan para pruebas semánticas y pruebas end-to-end (e2e). Si alguna prueba falla, `lint-staged` bloquea la escritura en el repositorio.
+  
+- **Shift-Left Testing**:
+  - Consiste en una metodología que enfatiza la detección temprana de problemas en el código para asegurar que solo scripts válidos sean subidos a GitHub.
+
+## Flujo de Procesamiento
+
+1. El usuario ejecuta `npm run build`.
+2. Zod verifica los diccionarios en `src/config.ts`.
+3. Node.js realiza el SSR rendering de las páginas.
+4. Tailwind CSS extrae y compila solo las clases usadas.
+5. Vite se encarga de empaquetar el JavaScript, optimizando el código.
+
+Esto garantiza la integridad y la salud del artefacto final antes de la implementación.
+
+**Sources:**
+- [05 Despliegue y PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,3,0.3333333333333333
+q0039,What is the role of Vite in the Astro project described?,en,docs_05-Despliegue-y-PWA,"## Role of Vite in the Astro Project
+
+Vite plays a crucial role in the Astro portfolio project by serving as the underlying bundler, replacing older technologies like Webpack. Below are the key functionalities and features Vite provides:
+
+- **Fast Bundling:** Vite is an ultra-fast bundler that minimizes images, replaces variables, and packages JavaScript into minified chunks. This leads to improved performance and a more efficient build process.
+
+- **Development Server:** Vite offers a ""Dev Server"" that enables hot module replacement (HMR). This means changes you make during development are reflected immediately in the browser without needing to refresh the entire page, enhancing the development experience.
+
+- **Final Build Process:** During the final build, Vite combines dependencies and performs code splitting to create optimized output. It reduces the JavaScript files needed on each route, making the application load faster.
+
+- **Image and Asset Optimization:** Vite also handles the optimization of images and other assets in the project, ensuring they are efficiently processed and served.
+
+- **Integration with Progressive Web Apps (PWA):** With the use of `vite-plugin-pwa`, Vite facilitates the implementation of service workers, allowing the portfolio to function offline and be installable as a native application.
+
+- **Quality Control and Testing Pipeline:** Vite integrates with various quality control tools (like ESLint and Vitest) to automate linting and testing, ensuring high code quality.
+
+In essence, Vite enhances the overall performance, development speed, and usability of the Astro portfolio project by enabling modern web development practices.
+
+**Sources:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [05 Despliegue y PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)",5,4,True,True,False,0,0.0
+q0040,How does the PWA implementation using Vite PWA Plugin and Workbox enable offline capabilities?,en,docs_05-Despliegue-y-PWA,"## PWA Implementation with Vite PWA Plugin and Workbox
+
+The implementation of Progressive Web App (PWA) features in Rodrigo Norabuena's portfolio through the Vite PWA Plugin and Workbox enables offline capabilities. Here's how it works:
+
+### Key Components
+- **Service Worker**: A background script that intercepts network requests and manages caching. It runs separately from the web page, allowing the application to handle offline scenarios effectively.
+- **Vite PWA Plugin**: Integrates Workbox, a library provided by Google that simplifies the implementation of service workers and caching strategies.
+
+### Offline Capabilities
+1. **Caching Strategy**:
+   - The service worker employs a **""Stale-While-Revalidate""** caching strategy. This means that when the user first accesses the application, the service worker intercepts the HTTPS requests and caches the page in the browser's cache.
+   - If there’s a network outage, the service worker can serve content from the cache, allowing the application to function as if it were online. This creates a native app-like experience.
+
+2. **Proxy Architecture**:
+   - The service worker acts as a proxy between the network and the cache, handling requests intelligently. If the requested resource is not available online, it serves the cached version, ensuring that users can still access the content without interruptions.
+
+3. **Installation as a Native App**:
+   - The use of service workers and caching allows the web app to be installed on the user’s device, making it behave like a native application. This feature enhances user engagement and accessibility.
+
+### Benefits
+- **Instant Loading**: Once cached, subsequent visits load instantly even without an internet connection.
+- **Progressive Enhancement**: Users get a robust experience regardless of their connectivity status, showcasing the advantages of modern web applications.
+
+These enhancements are pivotal in improving user experience—a key aspect of any portfolio showcasing web development prowess.
+
+**Sources:**
+- [05 Despliegue y PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)",5,5,True,True,True,1,1.0
+q0041,What is the purpose of 'Shift-Left Testing' in the described deployment pipeline?,en,docs_05-Despliegue-y-PWA,"## Purpose of Shift-Left Testing in the Deployment Pipeline
+
+Shift-Left Testing is implemented in the deployment pipeline to ensure early detection of potential software deficiencies and semantic issues. Here’s how it works and its benefits:
+
+- **Early Detection**: Shift-Left Testing focuses on catching errors and issues before they make it to the code repository (e.g., before a commit is pushed to GitHub).
+- **Use of Git Hooks**: The process employs Git Hooks (specifically, `Husky` and `lint-staged`) which trigger automated tests and code analysis as part of the pre-commit hook.
+- **Tool Integration**: It utilizes tools like ESLint for syntactical checks and Vitest/Playwright for semantic analysis and end-to-end testing.
+- **Validation Requirement**: Only if the tests pass and the syntactical checks return a success status (Status Code 0) will the code be allowed to be committed, ensuring that only healthy and valid code is integrated into the project.
+
+The primary goal of Shift-Left Testing is to maintain the integrity and health of the final artifact being deployed, thereby reducing the likelihood of bugs in production.
+
+**Sources:**
+- [05 Despliegue y PWA](https://github.com/rodnm/rodnm.github.io/blob/main/docs/05-Despliegue-y-PWA.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,1,1.0
+q0042,¿Qué pasos se deben seguir para subir un proyecto a GitHub según el documento?,es,docs_06-Primeros-Pasos-Git,"Para subir un proyecto a GitHub, sigue estos pasos según la documentación:
+
+## Pasos para subir un proyecto a GitHub
+
+1. **Crear el repositorio en GitHub:**
+   - Ve a [github.com/new](https://github.com/new).
+   - Asigna un nombre a tu repositorio (por ejemplo, `mi-portafolio`).
+   - **No** selecciones ninguna opción de inicialización (como README, .gitignore, License) porque ya debes tenerlos.
+   - Haz clic en **Create repository**.
+
+2. **Subir tu código:**
+   Abre tu terminal y ejecuta los siguientes comandos uno por uno:
+   ```bash
+   # 1. Asegura que todos los archivos estén listos para ser añadidos
+   git add .
+
+   # 2. Guarda los cambios
+   git commit -m ""Mi portafolio listo para despegar 🚀""
+
+   # 3. Renombra la rama principal a 'main' (si no lo es ya)
+   git branch -M main
+
+   # 4. Conecta tu carpeta local con el repositorio en GitHub (REEMPLAZA LA URL)
+   # Copia la URL que te proporcionó GitHub en el paso 1
+   git remote add origin https://github.com/TU_USUARIO/NOMBRE_DEL_REPO.git
+
+   # 5. Sube los archivos
+   git push -u origin main
+   ```
+
+3. **Verifica que todo esté correcto:**
+   Recarga la página de GitHub y deberías ver tus archivos en tu nuevo repositorio.
+
+Con estos pasos, tu proyecto estará disponible en GitHub.
+
+**Sources:**
+- [06 Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,5,True,True,True,1,1.0
+q0043,"¿Por qué no se deben marcar las casillas de README, .gitignore o License al crear el repositorio en GitHub?",es,docs_06-Primeros-Pasos-Git,"No se deben marcar las casillas de README, .gitignore o License al crear un repositorio en GitHub porque el proyecto ya incluye esos archivos. En el caso específico de este portafolio, estos archivos son parte de la estructura del proyecto, y al crear el repositorio sin marcarlos, se evita la duplicación innecesaria de dichos archivos. Esto garantiza que la configuración y el contenido del repositorio sean coherentes y estén gestionados a partir de los archivos ya existentes.
+
+### Resumen:
+- **README**: Ya existe en el proyecto y contiene documentación importante sobre el mismo.
+- **.gitignore**: También incluido en el proyecto para ignorar archivos que no necesitan ser rastreados.
+- **License**: Está predefinido con una licencia específica (Licencia MIT en este caso).
+
+### Instrucciones:
+1. Crear el repositorio en GitHub.
+2. No marcar las casillas antes mencionadas.
+3. Hacer clic en **Create repository**.
+
+Esto permite una mejor gestión y organización del repositorio.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,5,True,True,False,0,0.0
+q0044,"¿Cuál es el propósito del comando `git commit -m ""Mi portafolio listo para despegar 🚀""`?",es,docs_06-Primeros-Pasos-Git,"El comando `git commit -m ""Mi portafolio listo para despegar 🚀""` tiene el siguiente propósito:
+
+- **Guardar Cambios**: Este comando se utiliza para guardar todos los cambios que han sido añadidos al área de preparación (staging area) en tu repositorio local de Git.
+- **Mensaje Descriptivo**: La opción `-m` permite incluir un mensaje que describe los cambios realizados en ese commit. En este caso, el mensaje `""Mi portafolio listo para despegar 🚀""` indica que el usuario considera que su portafolio está listo para ser publicado o desplegado.
+
+Este comando es un paso crucial en el flujo de trabajo de Git, ya que permite llevar un registro de las modificaciones y su evolución a lo largo del tiempo.
+
+**Sources:**
+- [06 Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,5,True,True,True,1,1.0
+q0045,What is the first step to upload a project to GitHub as described in the document?,en,docs_06-Primeros-Pasos-Git,"The first step to upload a project to GitHub, as described in the documentation, is to create a repository on GitHub. Here’s how to do it:
+
+## Step 1: Create the Repository on GitHub
+1. Go to [github.com/new](https://github.com/new).
+2. Enter a name for your repository (e.g., `my-portfolio`).
+3. **Do not** check any boxes (README, .gitignore, License) because they are already handled.
+4. Click on **Create repository**.
+
+After creating the repository, you can proceed with the next steps to upload your code.
+
+**Sources:**
+- [06 Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,5,True,True,True,3,0.3333333333333333
+q0046,What command is used to connect your local folder to the GitHub repository?,en,docs_06-Primeros-Pasos-Git,"To connect your local folder to a GitHub repository, you can use the following command:
+
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/REPOSITORY_NAME.git
+```
+
+Replace `YOUR_USERNAME` with your GitHub username and `REPOSITORY_NAME` with the name of your repository.
+
+### Steps to Follow:
+1. Open your terminal.
+2. Navigate to your local project folder.
+3. Run the command above to link your local repository with the remote GitHub repository.
+4. After this, you can use `git push -u origin main` to upload your commits.
+
+**Remember** to first create a GitHub repository before running the command above.
+
+**Sources:**
+- [06 Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,5,True,True,True,3,0.3333333333333333
+q0047,How can you verify that your project files have been successfully uploaded to GitHub?,en,docs_06-Primeros-Pasos-Git,"To verify that your project files have been successfully uploaded to GitHub, follow these steps:
+
+## Steps to Verify Upload
+
+1. **Push Changes to the Main Branch:**
+   - Ensure you push your changes to the `main` branch. Use these commands in your terminal:
+     ```bash
+     git add .
+     git commit -m ""Your commit message""
+     git push origin main
+     ```
+
+2. **Check the Actions Tab:**
+   - Go to your GitHub repository and navigate to the **Actions** tab. Here, you can see the progress of your deployment and confirm if it completed successfully.
+
+3. **View the Repository:**
+   - Reload your GitHub repository page ([github.com/YOUR_USERNAME/YOUR_REPO](https://github.com/YOUR_USERNAME/YOUR_REPO)) and check the file list to see if your project files are present.
+
+4. **GitHub Pages Settings:**
+   - Ensure that in the **Settings > Pages** section of your repository, the source is set to **GitHub Actions** and that it reflects the correct branch (for this portfolio, it should be the `main` branch).
+
+5. **Access Your Site:**
+   - Visit the URL for your GitHub Pages site (either your user site or project site), which will be in the format:
+     - User Site: `https://YOUR_USERNAME.github.io`
+     - Project Site: `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
+
+## Troubleshooting Tips
+- If you encounter a blank page or missing styles, check the `astro.config.mjs` file to ensure that the `base` path (if used) is correctly set.
+- For error messages like 404, confirm that the necessary files and folders exist in the expected structure. 
+
+By following these steps, you can ensure that your project files are successfully uploaded and your site is operational.
+
+**Sources:**
+- [07 Guia Despliegue GitHub Pages](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)
+- [06 Primeros Pasos Git](https://github.com/rodnm/rodnm.github.io/blob/main/docs/06-Primeros-Pasos-Git.md)",5,4,True,True,True,3,0.3333333333333333
+q0048,¿Cuál es el patrón arquitectónico principal utilizado en este portafolio y cómo beneficia al rendimiento?,es,docs_Resumen-Arquitectura,"## Patrón Arquitectónico Principal y Beneficios de Rendimiento
+
+El portafolio utiliza principalmente dos patrones arquitectónicos: **Generación de Sitios Estáticos (SSG)** y **Arquitectura de Islas (Islands Architecture)**. A continuación, se explican cada uno y sus beneficios para el rendimiento:
+
+### 1. Generación de Sitios Estáticos (SSG)
+- **Descripción**: Este enfoque genera toda la estructura del sitio en el momento de la construcción en el servidor, produciendo HTML y CSS estáticos.
+- **Beneficios**:
+  - **Rendimiento Mejorado**: Los tiempos de carga son significativamente más rápidos porque el navegador recibe HTML y CSS pura, reduciendo el tiempo de renderizado inicial.
+  - **SEO Mejorado**: Los motores de búsqueda pueden indexar contenido de manera más efectiva, ya que se ofrece un documento completamente renderizado sin dependencia de JavaScript.
+
+### 2. Arquitectura de Islas
+- **Descripción**: Este paradigma permite que solo ciertas partes del sitio sean interactivas. Se trata de componentes que se ""hidratan"" según sea necesario, mientras que el resto del contenido permanece estático.
+- **Beneficios**:
+  - **Carga Eficiente**: Solo se carga JavaScript para componentes que requieren interactividad, lo que minimiza la cantidad de código que se descarga y ejecuta en el cliente.
+  - **Experiencia de Usuario Suave**: Los tiempos de espera son menores cuando la mayoría del contenido es estático y solo se cargan interacciones específicas.
+
+### Conclusión
+Con estos enfoques, el portafolio no solo optimiza la velocidad de carga y la experiencia del usuario, sino que también asegura un mejor posicionamiento en motores de búsqueda gracias a su contenido estático accesible.
+
+**Sources:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,True,1,1.0
+q0049,¿Cómo se gestionan los datos y la internacionalización en este proyecto?,es,docs_Resumen-Arquitectura,"## Gestión de Datos
+
+En este proyecto, la gestión de datos se maneja utilizando un sistema robusto que separa el modelo de los datos de la vista:
+
+1. **Patrón Vista-Modelo Centralizado**:
+   - Toda la lógica de los datos está centralizada en el archivo `src/config.ts`, que actúa como la única fuente de la verdad (SOT - Source of Truth).
+   - Utilizamos estructuras semánticas para los datos, como `spanishData` y `englishData`.
+
+2. **Validación con Zod**:
+   - Se implementa Zod para validar la integridad de los datos en tiempo de compilación.
+   - Ejemplo de esquema: 
+     ```typescript
+     const ProjectSchema = z.object({
+       title: z.string(),
+       description: z.string(),
+       link: z.string().url(),
+       image: ImageMetadataSchema,
+     });
+     ```
+   - Si hay algún error de tipo en los datos, el proceso de construcción falla, evitando que se publiquen páginas con datos incorrectos.
+
+3. **Resolución Simétrica**:
+   - El sistema de internacionalización (i18n) es estructuralmente simétrico, donde los datos `spanishData` y `englishData` operan bajo la misma interfaz (`PortfolioDataSchema`).
+
+**Fuente:**
+- [03 Gestion de Datos](https://github.com/rodnm/rodnm.github.io/blob/main/docs/03-Gestion-de-Datos.md)
+
+## Internacionalización (i18n)
+
+La internacionalización se realiza de forma estática, sin carga dinámica de archivos:
+
+- Durante la construcción, Astro inyecta `currentLocale=""es""` o `currentLocale=""en""` como una propiedad constante en los componentes.
+- Se generan dos rutas estáticas separadas: una para los datos en español (`/`) y otra para los datos en inglés (`/en/`).
+- Esto garantiza que los textos en cada página estén ""codificados de fábrica"" en su respectivo idioma.
+
+**Fuente:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,3,0.3333333333333333
+q0050,¿Qué rol juega Astro en la integración de frameworks como React?,es,docs_Resumen-Arquitectura,"Astro desempeña un papel fundamental en la integración de frameworks como React en tu portafolio. Aquí te explico cómo funciona:
+
+## Rol de Astro en la Integración de React
+
+1. **Arquitectura de Islas**:
+   - Astro utiliza un enfoque conocido como ""Islands Architecture."" Esto significa que el sitio está compuesto principalmente de HTML estático, mientras que las partes interactivas (componenetes de React) funcionan como ""islas de interactividad."" Esto permite que solo se envíe JavaScript cuando es necesario, optimizando el rendimiento.
+
+2. **Hidratación**:
+   - El proceso de hidratación en Astro permite que React tome control de partes específicas del HTML ya renderizado en el navegador. Por ejemplo, si tienes un componente de botón que necesita interactividad, Astro puede cargar el JavaScript de React solo para ese componente cuando sea necesario, como al hacer scroll hacia él o al hacer visible la isla.
+
+3. **Integración Sencilla**:
+   - Astro actúa como el enrutador principal y la base del diseño, utilizando archivos `.astro` donde puedes importar y utilizar componentes de React. Esto permite separar la lógica del servidor de la presentación, permitiendo que el contenido se genere dinámicamente solo donde se necesita.
+
+4. **Optimización del Código**:
+   - Los componentes React solo cargan el JavaScript necesario, lo que disminuye el peso del archivo final y mejora tiempos de carga. Esto es crucial para SEO y experiencia del usuario, ya que permite que los motores de búsqueda indexen el contenido sin depender de JavaScript.
+
+### Ejemplo de Código
+En la estructura de tu portafolio:
+
+```astro
+<!-- Componente Astro -->
+<Hero data={personalInfo} />
+<ToggleTheme client:load />
+<ImageCarousel client:visible />
+```
+- En este ejemplo, `Hero` es un componente que renderiza HTML sin enviar React al cliente, mientras que `ToggleTheme` y `ImageCarousel` son hidrateados de forma selectiva según la interacción del usuario.
+
+**Conclusión**: Astro optimiza la integración de React al permitir que el sitio principal se sirva como HTML estático, cargando componentes React solo al ser necesario, mejorando así la velocidad y la experiencia del usuario.
+
+**Sources:**
+- [Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,5,True,True,True,5,0.2
+q0051,What is the primary architectural pattern used in this portfolio and how does it benefit performance?,en,docs_Resumen-Arquitectura,"## Primary Architectural Pattern Used: Islands Architecture
+
+The primary architectural pattern used in this portfolio is the **Islands Architecture**, integrated within the Astro framework. This approach combines both static site generation (SSG) and interactive components effectively.
+
+### Benefits for Performance
+1. **Static Site Generation (SSG)**:
+   - The portfolio generates static HTML files during build time, which significantly reduces runtime JavaScript needed on the client-side.
+   - By executing `npm run build`, Astro processes TypeScript code and outputs raw HTML files. This results in:
+     - Fast First Contentful Paint (FCP) and Time to Interactive (TTI).
+     - Browsers can quickly download and render HTML and CSS, which are almost instantaneous, before any JavaScript is evaluated.
+     - Excellent SEO as search engines can index the static content without needing to render JavaScript.
+
+2. **Granular Hydration**:
+   - The islands represent discrete ""interactive islands"" (like React components) that only load JavaScript when necessary.
+   - This means that static components do not require JavaScript at all, while only specific parts of the site that need interactivity (like a dark mode toggle) will load their respective JavaScript.
+
+By minimizing the amount of JavaScript sent to the browser and optimizing the rendering process, the portfolio achieves improved performance metrics and a better user experience.
+
+**Sources:**
+- [Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)",5,5,True,True,False,0,0.0
+q0052,How are data management and internationalization handled in this project?,en,docs_Resumen-Arquitectura,"## Data Management
+
+The portfolio project manages data using the Zod library to enforce strong validation of structured contracts. Key points include:
+
+- **Contract Definition**: Schemas like `PortfolioDataSchema` define strict types for incoming data. For example:
+  - `email: z.string().email()`
+  - `link: z.string().url()`
+- **Build-Time Validation**: When incorrect data is detected (e.g., a broken link), Zod validation fails during the build phase (`PortfolioDataSchema.parse(spanishData`)), preventing broken pages from going live.
+
+## Internationalization (i18n)
+
+The portfolio supports bilingual content (Spanish/English) through static internationalization:
+
+- **Static Injection**: `currentLocale=""es""` or `currentLocale=""en""` are injected as props into components at build time, instead of dynamically loading JSON files in the browser.
+- **Separate Routes**: Two static routes are compiled:
+  - `/` for Spanish content
+  - `/en/` for English content
+- **Fixed HTML Content**: Each final HTML page contains hard-coded text in its respective language.
+
+### Additional Information
+
+Astro operates as the main router and visual layout base, while React components are used for complex stateful interactions. The project uses Tailwind CSS for styling, focusing on utility-first development.
+
+**Sources:**
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)",5,5,True,True,True,2,0.5
+q0053,What is the role of Astro in integrating frameworks like React?,en,docs_Resumen-Arquitectura,"## Role of Astro in Integrating Frameworks like React
+
+Astro plays a crucial role in integrating frameworks like React by providing a hybrid architecture that allows for both static content and dynamic interactivity. Here’s how it works:
+
+1. **Static Site Generation (SSG)**:
+   - Astro uses SSG to build the site, generating static HTML at build time instead of doing client-side rendering. This leads to faster load times and better SEO.
+
+2. **Islands Architecture**:
+   - Astro introduces the ""Islands Architecture,"" where static HTML serves as the base (the ocean), and interactive components (the islands, such as React components) are loaded as needed. 
+   - For example, a typical layout may be composed of static Astro components, while elements like a toggle button or an image carousel (implemented with React) are dynamically hydrated based on user interaction or visibility.
+
+3. **Granular Hydration**:
+   - Astro allows granular hydration of React components. This means that only the necessary JavaScript for a particular component is sent to the client when it's required, optimizing performance.
+   - Components are defined with `client:*` directives to control their loading behavior:
+     - `client:load`: Loads a component as soon as the page loads.
+     - `client:visible`: Loads the component only when it becomes visible on the viewport.
+
+4. **Separation of Usage**:
+   - Astro files (`.astro`) are used for stateless, presentation-focused components, while React components (`.tsx`) are used for stateful, interactive components requiring reactivity and lifecycle management.
+
+5. **Integration**:
+   - The integration of React is seamless through the `@astrojs/react` package, which allows React components to be used within Astro's framework efficiently, balancing server-side rendering with client-side interactivity.
+
+This structure allows developers to leverage React for complex, interactive UI elements without sacrificing the performance benefits of static site generation provided by Astro.
+
+**Sources:**
+- [01 Arquitectura Astro](https://github.com/rodnm/rodnm.github.io/blob/main/docs/01-Arquitectura-Astro.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)
+- [02 Componentes](https://github.com/rodnm/rodnm.github.io/blob/main/docs/02-Componentes.md)",5,5,True,True,True,3,0.3333333333333333
+q0054,¿Cuál es el propósito principal de este blog personal?,es,src_content_blog_first-post,"El propósito principal del blog personal de Rodrigo Norabuena es compartir sus experiencias, aprendizajes y proyectos relacionados con el desarrollo web, la ciencia de datos, y la economía. A través del blog, busca:
+
+1. Documentar su proceso de aprendizaje.
+2. Compartir soluciones a problemas que ha enfrentado.
+3. Conectar con otros profesionales en su campo.
+
+Rodrigo considera que escribir es una de las mejores maneras de consolidar el conocimiento.
+
+**Sources:**
+- [Bienvenido a mi Blog](https://github.com/rodnm/rodnm.github.io/blob/main/src/content/blog/first-post.md)",5,5,True,True,True,1,1.0
+q0055,¿Qué temas se abordarán en el blog?,es,src_content_blog_first-post,"En el blog de Rodrigo Norabuena se abordarán los siguientes temas:
+
+- **Desarrollo Web**: Compartirá experiencias y aprendizajes relacionados con la creación y gestión de sitios web.
+- **Ciencia de Datos**: Discutirá proyectos y métodos en el ámbito de la ciencia de datos.
+- **Economía**: Abordará temas económicos, ofreciendo su perspectiva y análisis.
+
+El blog servirá como un espacio para documentar su proceso de aprendizaje, compartir soluciones a problemas y conectar con otros profesionales del área.
+
+**Sources:**
+- [Bienvenido a mi Blog](https://github.com/rodnm/rodnm.github.io/blob/main/src/content/blog/first-post.md)",5,5,True,True,True,1,1.0
+q0056,¿Qué tecnologías se mencionan en la documentación del sitio web?,es,src_content_blog_first-post,"Las tecnologías mencionadas en la documentación del sitio web de Rodrigo Norabuena son las siguientes:
+
+## Tecnologías Utilizadas
+- **Astro** v5: Generador de sitios estáticos (SSG) que utiliza arquitectura de islas.
+- **Tailwind CSS** v4: Enfoque de diseño de estilos con CSS utilitario.
+- **React** v19: Utilizado para la creación de componentes interactivos.
+- **Lucide React**: Librería de iconos para la interfaz.
+- **ESLint** 9, **Prettier**, **Husky**, **lint-staged**: Herramientas para asegurar la calidad del código.
+- **Vitest**: Para pruebas unitarias.
+- **Playwright**: Para pruebas end-to-end.
+- **Vite PWA Plugin**: Para la implementación de la aplicación como PWA (Progresive Web App) que permite instalación y soporte offline.
+
+Estos componentes trabajan juntos para crear un sistema de portafolio eficiente y accesible, siguiendo las mejores prácticas de desarrollo web.
+
+**Sources:**
+- [README](https://github.com/rodnm/rodnm.github.io/blob/main/README.md)
+- [Resumen Arquitectura](https://github.com/rodnm/rodnm.github.io/blob/main/docs/Resumen-Arquitectura.md)",5,3,True,True,False,0,0.0
+q0057,What is the main topic of this blog post?,en,src_content_blog_first-post,"The main topic of the blog post titled ""Bienvenido a mi Blog"" (Welcome to my Blog) is about the author's personal blog where they will share experiences, learning, and projects related to web development, data science, and economics. The author emphasizes the importance of writing as a way to consolidate knowledge and connect with other professionals. They also outline their goals for the blog, which include documenting their learning process, sharing solutions to problems, and providing valuable content to readers.
+
+**Sources:**
+- [Bienvenido a mi Blog](https://github.com/rodnm/rodnm.github.io/blob/main/src/content/blog/first-post.md)",5,5,False,True,True,1,1.0
+q0058,What are the stated reasons for creating this blog?,en,src_content_blog_first-post,"The blog created by Rodrigo Norabuena serves several purposes:
+
+## Reasons for Creating the Blog
+1. **Consolidate Knowledge**: Writing is viewed as one of the best ways to solidify understanding of various topics.
+2. **Document Learning Process**: The blog allows Rodrigo to keep a record of what he learns during his journey.
+3. **Share Solutions**: It provides a platform to share solutions to problems he has encountered.
+4. **Connect with Professionals**: The blog facilitates connections with other professionals in the field.
+
+The initial post emphasizes these reasons as part of the broader goal of sharing experiences, learnings, and projects related to web development, data science, and economics.
+
+**Sources:**
+- [first-post.md](https://github.com/rodnm/rodnm.github.io/blob/main/src/content/blog/first-post.md)",5,5,True,True,True,1,1.0
+q0059,What is the GitHub URL for this document?,en,src_content_blog_first-post,"The GitHub URL for the documentation on deploying to GitHub Pages is:
+
+- [Guía de Despliegue en GitHub Pages](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)
+
+If you need additional documentation, you can also refer to the main documentation index here:
+- [Documentación Completa](https://github.com/rodnm/rodnm.github.io/blob/main/docs/00-Indice.md)
+
+**Sources:**
+- [07 Guia Despliegue GitHub Pages](https://github.com/rodnm/rodnm.github.io/blob/main/docs/07-Guia-Despliegue-GitHub-Pages.md)
+- [00 Indice](https://github.com/rodnm/rodnm.github.io/blob/main/docs/00-Indice.md)",2,2,False,True,False,0,0.0

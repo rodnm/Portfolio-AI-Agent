@@ -1,11 +1,11 @@
 """
-search_agent.py — Pydantic AI agent powered by Gemini for Portfolio AI Agent
+search_agent.py — Pydantic AI agent powered by OpenAI for Portfolio AI Agent
 
 Creates a bilingual agent (Spanish / English auto-detect) that searches
 the rodnm.github.io documentation before answering every question.
 
 Environment variable required:
-    GEMINI_API_KEY  — key from https://aistudio.google.com/apikey
+    OPENAI_API_KEY  — key from https://platform.openai.com/
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from search_tools import SearchTool
 
 # ── Model ─────────────────────────────────────────────────────────────────────
 
-MODEL = "google-gla:gemini-2.5-flash-lite"
+MODEL = "openai:gpt-4o-mini"
 
 # ── System Prompt ─────────────────────────────────────────────────────────────
 
@@ -74,7 +74,7 @@ the technical documentation of this portfolio project.
 
 def init_agent(search_tool: SearchTool) -> Agent:
     """
-    Create and configure the Pydantic AI Agent with Gemini and the search tool.
+    Create and configure the Pydantic AI Agent with OpenAI and the search tool.
 
     Args:
         search_tool - a SearchTool instance holding the fitted minsearch Index
